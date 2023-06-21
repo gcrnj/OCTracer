@@ -4,14 +4,36 @@
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="prompt_category">Category</string>
-    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in">Login</string>
+    <string name="register">Register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
     <string name="too_many_emails">%1$d emails are found with this email</string>
     <string name="no_users_found">No users found</string>
     <string name="please_select_a_role">Please select a rol</string>
+    <string name="role_not_found">Role not found</string>
 
     <string name="super_admin">Super Admin</string>
     <string name="admin">Admin</string>
     <string name="graduate">Graduate</string>
+    <string name="first_name">First Name</string>
+    <string name="middle_name">Middle Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="year_graduated">Year Graduated</string>
+    <string name="address">Address</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="example_mobile_number">09123456789</string>
+    <string name="occupation">Occupation</string>
+
+    <string name="you_don_t_have_an_access_to_this_page">You don\'t have an access to this page</string>
+    <string name="your_current_user_is">Your current user is %1$s</string>
+    <string name="ok">OK</string>
+
+    <string name="this_field_requires_minimum_characters">This field required %1$d minimum characters</string>
+    <string name="this_field_requires_characters">This field required %1$d minimum characters</string>
+    <string name="this_field_is_required">This field is required</string>
+    <string name="this_input_is_invalid">This input is invalid</string>
+    <string name="this_field_cannot_be_empty">This field cannot be empty</string>
+    <string name="password_should_match">Password should match</string>
+
 </resources>

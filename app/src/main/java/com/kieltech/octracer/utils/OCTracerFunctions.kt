@@ -7,6 +7,9 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.kieltech.octracer.data.Graduate
+import com.kieltech.octracer.ui.register.RegisterValidation
+import com.kieltech.octracer.utils.OCTracerFunctions.hashPassword
 import org.mindrot.jbcrypt.BCrypt
 
 object OCTracerFunctions {

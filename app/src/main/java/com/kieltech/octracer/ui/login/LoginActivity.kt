@@ -1,19 +1,11 @@
 package com.kieltech.octracer.ui.login
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.snackbar.Snackbar
 import com.kieltech.octracer.R
 import com.kieltech.octracer.base.BaseActivity
-import com.kieltech.octracer.data.Admin
-import com.kieltech.octracer.data.Graduate
-import com.kieltech.octracer.data.SuperAdmin
 import com.kieltech.octracer.databinding.ActivityLoginBinding
-import com.kieltech.octracer.ui.landing.graduates.GraduatesLandingActivity
 import com.kieltech.octracer.utils.Constants
 import com.kieltech.octracer.utils.OCTracerFunctions.createViewModel
 import com.kieltech.octracer.utils.OCTracerFunctions.disabled
@@ -21,9 +13,7 @@ import com.kieltech.octracer.utils.OCTracerFunctions.enabled
 import com.kieltech.octracer.utils.OCTracerFunctions.gone
 import com.kieltech.octracer.utils.OCTracerFunctions.hideSoftKeyboard
 import com.kieltech.octracer.utils.OCTracerFunctions.milliseconds
-import com.kieltech.octracer.utils.OCTracerFunctions.seconds
 import com.kieltech.octracer.utils.OCTracerFunctions.visible
-import com.kieltech.octracer.utils.Users
 import com.kieltech.octracer.utils.Utils
 import com.kieltech.octracer.view_models.LoginViewModel
 import kotlinx.coroutines.delay
@@ -68,43 +58,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
     }
 
     override fun onLoginSuccess(collectionId: String, firestoreUserId: String, user: Any) {
-        userSharedPref.edit().apply {
-            putString(Constants.SHARED_PREF_UID, firestoreUserId)
-            putString(Constants.SHARED_PREF_ROLE, collectionId)
-            apply()
-        }
-        // Go to next page
-        when (collectionId) {
-            Constants.SUPER_ADMIN_COLLECTION_PATH -> {
-                val superAdminUser = user as SuperAdmin
-                Users.SuperAdminUser = superAdminUser
-                // Go to super admin dashboard
-            }
-
-            Constants.ADMIN_COLLECTION_PATH -> {
-                val adminUser = user as Admin
-                Users.AdminUser = adminUser
-                // Go to admin dashboard
-            }
-
-            Constants.GRADUATES_COLLECTION_PATH -> {
-                val graduateUser = user as Graduate
-                Users.GraduateUser = graduateUser
-                // Go to graduate dashboard
-                startActivity(Intent(this, GraduatesLandingActivity::class.java))
-                finish()
-            }
-
-            else -> {
-                Snackbar
-                    .make(
-                        binding.root,
-                        getString(R.string.please_select_a_role),
-                        Snackbar.LENGTH_LONG
-                    )
-                    .show()
-            }
-        }
+        saveUserAndGoToNextActivity(collectionId, firestoreUserId, user)
     }
 
     override fun onLoginProcessDone() {
