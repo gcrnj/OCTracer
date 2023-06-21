@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">OCTracer</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_category">Category</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="too_many_emails">%1$d emails are found with this email</string>
+    <string name="no_users_found">No users found</string>
+    <string name="please_select_a_role">Please select a rol</string>
+
+    <string name="super_admin">Super Admin</string>
+    <string name="admin">Admin</string>
+    <string name="graduate">Graduate</string>
+</resources>

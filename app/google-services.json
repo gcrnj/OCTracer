@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1042864029844",
+    "project_id": "octracer-83906",
+    "storage_bucket": "octracer-83906.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1042864029844:android:27676329bab2785208b481",
+        "android_client_info": {
+          "package_name": "com.kieltech.octracer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1042864029844-binbfurk3ntq3diajrvucpc0u30k3v5h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCC7NAK8FqB15gbXmiJHA06b_I8XD8wBtc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1042864029844-binbfurk3ntq3diajrvucpc0u30k3v5h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
