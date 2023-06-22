@@ -7,6 +7,8 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.firestore.DocumentSnapshot
+import com.kieltech.octracer.data.Admin
 import com.kieltech.octracer.data.Graduate
 import com.kieltech.octracer.ui.register.RegisterValidation
 import com.kieltech.octracer.utils.OCTracerFunctions.hashPassword
@@ -72,6 +74,14 @@ object OCTracerFunctions {
             }
         }
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+    }
+
+    fun DocumentSnapshot.generateGraduateUser(): Graduate {
+        return toObject(Graduate::class.java)!!
+    }
+
+    fun DocumentSnapshot.generateAdminUser(): Admin {
+        return toObject(Admin::class.java)!!
     }
 
     inline fun <reified VM : ViewModel> AppCompatActivity.createViewModel(): VM {

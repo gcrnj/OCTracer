@@ -13,7 +13,6 @@ object Constants {
     const val INVALID_EMAIL = "Invalid Email Address"
     const val PASSWORD_LESS_THAN_MIN_LENGTH = "Password must be less than 8 characters"
 
-    const val SUPER_ADMIN_COLLECTION_PATH: String = "super_admin"
     const val ADMIN_COLLECTION_PATH: String = "admin"
     const val GRADUATES_COLLECTION_PATH: String = "graduates"
     const val EMAIL_KEY: String = "email"

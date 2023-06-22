@@ -10,10 +10,9 @@
     <string name="welcome">"Welcome !"</string>
     <string name="too_many_emails">%1$d emails are found with this email</string>
     <string name="no_users_found">No users found</string>
-    <string name="please_select_a_role">Please select a rol</string>
+    <string name="please_select_a_role">Please select a role</string>
     <string name="role_not_found">Role not found</string>
 
-    <string name="super_admin">Super Admin</string>
     <string name="admin">Admin</string>
     <string name="graduate">Graduate</string>
     <string name="first_name">First Name</string>

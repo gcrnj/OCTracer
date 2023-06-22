@@ -11,8 +11,6 @@ import com.kieltech.octracer.data.Graduate
 import com.kieltech.octracer.ui.register.RegisterListener
 import com.kieltech.octracer.ui.register.RegisterValidation
 import com.kieltech.octracer.utils.Constants
-import com.kieltech.octracer.utils.OCTracerFunctions.hashPassword
-import com.kieltech.octracer.utils.OCTracerFunctions.toHashMap
 
 class RegisterViewModel : ViewModel() {
 
@@ -20,15 +18,8 @@ class RegisterViewModel : ViewModel() {
     private val _currentCollection = MutableLiveData<CollectionReference?>()
     val currentCollection: LiveData<CollectionReference?> = _currentCollection
 
-    private val _unauthorizedMessage = MutableLiveData<String?>()
-    val unauthorizedMessage: LiveData<String?> = _unauthorizedMessage
-
     private val _graduateErrors = MutableLiveData<RegisterValidation.Companion.GraduateErrors?>()
     val graduateErrors: LiveData<RegisterValidation.Companion.GraduateErrors?> = _graduateErrors
-
-    fun setUnauthorizedMessage(newMessage: String) {
-        _unauthorizedMessage.value = newMessage
-    }
 
     fun setNewErrors(newError: RegisterValidation.Companion.GraduateErrors?) {
         _graduateErrors.value = newError

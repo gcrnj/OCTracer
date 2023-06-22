@@ -8,12 +8,9 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.kieltech.octracer.R
-import com.kieltech.octracer.data.Admin
-import com.kieltech.octracer.data.Graduate
-import com.kieltech.octracer.data.SuperAdmin
 import com.kieltech.octracer.ui.login.LoginListener
 import com.kieltech.octracer.ui.login.LoginValidation
-import com.kieltech.octracer.utils.Constants
+import com.kieltech.octracer.utils.OCTracerFunctions.generateGraduateUser
 import org.mindrot.jbcrypt.BCrypt
 
 class LoginViewModel : ViewModel() {
@@ -111,32 +108,15 @@ class LoginViewModel : ViewModel() {
         val userFound = emailInput == emailFromDB && equalPasswords
 
         if (userFound) {
-            val user = generateUser(userDocument)
+            val graduate = userDocument.generateGraduateUser()
             loginListener.onLoginSuccess(
                 currentCollection.value?.id.toString(),
                 credentialsId,
-                user
+                graduate
             )
         } else {
             val newError = LoginValidation.LoginErrors(null, noUsersFound)
             setErrors(null, newError)
-        }
-    }
-
-    private fun generateUser(userDocument: DocumentSnapshot): Any {
-        return when (currentCollection.value?.id) {
-            Constants.SUPER_ADMIN_COLLECTION_PATH -> {
-                userDocument.toObject(SuperAdmin::class.java)!!
-                // Go to next user
-            }
-
-            Constants.ADMIN_COLLECTION_PATH -> {
-                userDocument.toObject(Admin::class.java)!!
-            }
-
-            else -> {
-                userDocument.toObject(Graduate::class.java)!!
-            }
         }
     }
 
@@ -154,8 +134,8 @@ class LoginViewModel : ViewModel() {
         collection.document(uid)
             .get()
             .addOnSuccessListener { documentSnapshot ->
-                val user = generateUser(documentSnapshot)
-                loginListener.onLoginSuccess(collection.id, documentSnapshot.id, user)
+                val graduate = documentSnapshot.generateGraduateUser()
+                loginListener.onLoginSuccess(collection.id, documentSnapshot.id, graduate)
             }
             .addOnFailureListener { e ->
                 Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()

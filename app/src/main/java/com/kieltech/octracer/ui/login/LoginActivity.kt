@@ -5,6 +5,7 @@ import android.widget.ArrayAdapter
 import androidx.lifecycle.lifecycleScope
 import com.kieltech.octracer.R
 import com.kieltech.octracer.base.BaseActivity
+import com.kieltech.octracer.data.Graduate
 import com.kieltech.octracer.databinding.ActivityLoginBinding
 import com.kieltech.octracer.utils.Constants
 import com.kieltech.octracer.utils.OCTracerFunctions.createViewModel
@@ -28,14 +29,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
     }
     private val rolesCollection by lazy {
         listOf(
-            Utils.superAdminCollection,
             Utils.adminCollection,
             Utils.graduatesCollection
         )
     }
     private val rolesTitle by lazy {
         listOf(
-            getString(R.string.super_admin),
             getString(R.string.admin),
             getString(R.string.graduate),
         )
@@ -57,8 +56,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
         hideSoftKeyboard()
     }
 
-    override fun onLoginSuccess(collectionId: String, firestoreUserId: String, user: Any) {
-        saveUserAndGoToNextActivity(collectionId, firestoreUserId, user)
+    override fun onLoginSuccess(collectionId: String, firestoreUserId: String, graduate: Graduate) {
+        saveUserAndGoToNextActivity(
+            collectionId = collectionId,
+            firestoreUserId = firestoreUserId,
+            graduateUser = graduate,
+            shouldLoginAutomatically = true)
     }
 
     override fun onLoginProcessDone() {
@@ -143,10 +146,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
             if (uid != null && role != null) {
                 // there is a user
                 val collection = when (role) {
-                    Constants.SUPER_ADMIN_COLLECTION_PATH -> {
-                        Utils.superAdminCollection
-                    }
-
                     Constants.ADMIN_COLLECTION_PATH -> {
                         Utils.adminCollection
                         // Go to admin dashboard

@@ -1,6 +1,5 @@
 package com.kieltech.octracer.ui.register
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -18,6 +17,7 @@ import com.kieltech.octracer.utils.OCTracerFunctions.milliseconds
 import com.kieltech.octracer.utils.OCTracerFunctions.visible
 import com.kieltech.octracer.utils.Utils
 import com.kieltech.octracer.view_models.RegisterViewModel
+import io.grpc.okhttp.internal.Util
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -29,21 +29,11 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterB
         createViewModel()
     }
 
-    private val noAccessDialog: AlertDialog by lazy {
-        val dialog = AlertDialog.Builder(this).create()
-        dialog.setTitle(getString(R.string.you_don_t_have_an_access_to_this_page))
-        dialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.ok)) { _, _ ->
-            dialog.dismiss()
-            finish()
-        }
-        dialog
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        registerViewModel.setCurrentCollectionTo(Utils.graduatesCollection)
         testCreds()
-        checkActivityAuthorization()
         setOnClickListeners()
         defineViewModelObservers()
     }
@@ -71,8 +61,12 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterB
         }
     }
 
-    override fun onRegisterSuccess(collectionId: String, firestoreUserId: String, user: Any) {
-        saveUserAndGoToNextActivity(collectionId, firestoreUserId, user)
+    override fun onRegisterSuccess(collectionId: String, firestoreUserId: String, graduate: Graduate) {
+        saveUserAndGoToNextActivity(
+            collectionId = collectionId,
+            firestoreUserId = firestoreUserId,
+            graduateUser = graduate,
+            shouldLoginAutomatically = false)
     }
 
     override fun onRegisterProcessDone() {
@@ -102,9 +96,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterB
                         return@launch
                     }
                     // Crate user credentials
-                    if (registerViewModel.currentCollection.value == Utils.superAdminCollection) {
-                        // TODO Create admin credentials
-                    } else if (registerViewModel.currentCollection.value == Utils.graduatesCollection) {
+                    if (registerViewModel.currentCollection.value == Utils.graduatesCollection) {
                         //Create graduate collection
                         val graduate = Graduate(
                             first_name = firstNameEditText.text.toString(),
@@ -138,14 +130,6 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterB
     }
 
     private fun defineViewModelObservers() {
-        registerViewModel.unauthorizedMessage.observe(this) { message ->
-            if (message == null) {
-                noAccessDialog.dismiss()
-            } else {
-                showNoUserError(message)
-            }
-        }
-
         registerViewModel.graduateErrors.observe(this) { errors ->
             Log.d(TAG, "defineViewModelObservers: $errors")
             binding.apply {
@@ -174,31 +158,4 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterB
 
     }
 
-    private fun checkActivityAuthorization() {
-        if (getAdminUser() != null) {
-            val unauthorizedMessage = getString(
-                R.string.your_current_user_is,
-                getString(R.string.admin)
-            )
-            registerViewModel.setUnauthorizedMessage(unauthorizedMessage)
-        } else if (getSuperAdminUser() != null) {
-            registerViewModel.setCurrentCollectionTo(Utils.adminCollection)
-        } else if (getGraduateUser() == null) {
-            registerViewModel.setCurrentCollectionTo(Utils.graduatesCollection)
-        } else if (getGraduateUser() != null) {
-            val unauthorizedMessage = getString(
-                R.string.your_current_user_is,
-                getString(R.string.graduate)
-            )
-            registerViewModel.setUnauthorizedMessage(unauthorizedMessage)
-        }
-    }
-
-    private fun showNoUserError(message: String) {
-        with(noAccessDialog) {
-            setMessage(message)
-            show()
-        }
-
-    }
 }
