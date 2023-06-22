@@ -17,7 +17,6 @@ import com.kieltech.octracer.utils.OCTracerFunctions.milliseconds
 import com.kieltech.octracer.utils.OCTracerFunctions.visible
 import com.kieltech.octracer.utils.Utils
 import com.kieltech.octracer.view_models.RegisterViewModel
-import io.grpc.okhttp.internal.Util
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -62,7 +61,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterB
     }
 
     override fun onRegisterSuccess(collectionId: String, firestoreUserId: String, graduate: Graduate) {
-        saveUserAndGoToNextActivity(
+        saveUserAndGoToGraduatesLanding(
             collectionId = collectionId,
             firestoreUserId = firestoreUserId,
             graduateUser = graduate,

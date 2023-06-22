@@ -5,6 +5,7 @@ import android.widget.ArrayAdapter
 import androidx.lifecycle.lifecycleScope
 import com.kieltech.octracer.R
 import com.kieltech.octracer.base.BaseActivity
+import com.kieltech.octracer.data.Admin
 import com.kieltech.octracer.data.Graduate
 import com.kieltech.octracer.databinding.ActivityLoginBinding
 import com.kieltech.octracer.utils.Constants
@@ -56,12 +57,20 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
         hideSoftKeyboard()
     }
 
-    override fun onLoginSuccess(collectionId: String, firestoreUserId: String, graduate: Graduate) {
-        saveUserAndGoToNextActivity(
-            collectionId = collectionId,
-            firestoreUserId = firestoreUserId,
-            graduateUser = graduate,
-            shouldLoginAutomatically = true)
+    override fun onLoginSuccess(collectionId: String, firestoreUserId: String, graduate: Graduate?, admin: Admin?) {
+        if(graduate != null){
+            saveUserAndGoToGraduatesLanding(
+                collectionId = collectionId,
+                firestoreUserId = firestoreUserId,
+                graduateUser = graduate,
+                shouldLoginAutomatically = true)
+        } else if (admin != null){
+            saveUserAndGoToAdminLanding(
+                collectionId = collectionId,
+                firestoreUserId = firestoreUserId,
+                admin = admin,
+                shouldLoginAutomatically = true)
+        }
     }
 
     override fun onLoginProcessDone() {

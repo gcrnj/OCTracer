@@ -11,6 +11,7 @@ import com.kieltech.octracer.R
 import com.kieltech.octracer.ui.login.LoginListener
 import com.kieltech.octracer.ui.login.LoginValidation
 import com.kieltech.octracer.utils.OCTracerFunctions.generateGraduateUser
+import com.kieltech.octracer.utils.Utils
 import org.mindrot.jbcrypt.BCrypt
 
 class LoginViewModel : ViewModel() {
@@ -59,13 +60,12 @@ class LoginViewModel : ViewModel() {
                             val firstDocument = querySnapshot.documents[0]
                             val credentialsFromDB: LoginValidation.LoginCredentials =
                                 firstDocument.toObject(LoginValidation.LoginCredentials::class.java)!!
-                            val passwordError = context.getString(R.string.no_users_found)
                             checkLogin(
+                                context,
                                 firstDocument,
                                 userInputCredentials,
                                 credentialsFromDB,
                                 firstDocument.id,
-                                passwordError,
                                 loginListener
                             )
                         }
@@ -90,11 +90,11 @@ class LoginViewModel : ViewModel() {
     }
 
     private fun checkLogin(
+        context: Context,
         userDocument: DocumentSnapshot,
         userInputCredentials: LoginValidation.LoginCredentials,
         credentialsFromDB: LoginValidation.LoginCredentials,
         credentialsId: String,
-        noUsersFound: String,
         loginListener: LoginListener,
     ) {
         val emailInput = userInputCredentials.email
@@ -107,15 +107,34 @@ class LoginViewModel : ViewModel() {
 
         val userFound = emailInput == emailFromDB && equalPasswords
 
+        val collection = _currentCollection.value
+
         if (userFound) {
-            val graduate = userDocument.generateGraduateUser()
-            loginListener.onLoginSuccess(
-                currentCollection.value?.id.toString(),
-                credentialsId,
-                graduate
-            )
+            when (collection) {
+                Utils.graduatesCollection -> {
+                    val graduate = userDocument.generateGraduateUser()
+                    loginListener.onLoginSuccess(
+                        currentCollection.value?.id.toString(),
+                        credentialsId,
+                        graduate,
+                        null
+                    )
+                }
+                Utils.adminCollection -> {
+                    val graduate = userDocument.generateGraduateUser()
+                    loginListener.onLoginSuccess(
+                        currentCollection.value?.id.toString(),
+                        credentialsId,
+                        graduate,
+                        null
+                    )
+                }
+                else -> {
+                    setErrors(context.getString(R.string.please_select_a_role), null)
+                }
+            }
         } else {
-            val newError = LoginValidation.LoginErrors(null, noUsersFound)
+            val newError = LoginValidation.LoginErrors(null, context.getString(R.string.no_users_found))
             setErrors(null, newError)
         }
     }
@@ -133,9 +152,27 @@ class LoginViewModel : ViewModel() {
         loginListener.onLoginStart()
         collection.document(uid)
             .get()
-            .addOnSuccessListener { documentSnapshot ->
-                val graduate = documentSnapshot.generateGraduateUser()
-                loginListener.onLoginSuccess(collection.id, documentSnapshot.id, graduate)
+            .addOnSuccessListener { userDocument ->
+                when (collection) {
+                    Utils.graduatesCollection -> {
+                        val graduate = userDocument.generateGraduateUser()
+                        loginListener.onLoginSuccess(
+                            currentCollection.value?.id.toString(),
+                            uid,
+                            graduate,
+                            null
+                        )
+                    }
+                    Utils.adminCollection -> {
+                        val graduate = userDocument.generateGraduateUser()
+                        loginListener.onLoginSuccess(
+                            currentCollection.value?.id.toString(),
+                            uid,
+                            graduate,
+                            null
+                        )
+                    }
+                }
             }
             .addOnFailureListener { e ->
                 Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
