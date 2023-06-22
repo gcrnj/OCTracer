@@ -46,7 +46,6 @@ class RegisterViewModel : ViewModel() {
 
         //register
         val collection = _currentCollection.value
-        graduate.hashPassword()
         if (collection == null) {
             Toast.makeText(context, context.getString(R.string.role_not_found), Toast.LENGTH_SHORT)
                 .show()

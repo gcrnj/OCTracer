@@ -1,6 +1,7 @@
 package com.kieltech.octracer.ui.login
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.lifecycle.lifecycleScope
 import com.kieltech.octracer.R
@@ -16,6 +17,7 @@ import com.kieltech.octracer.utils.OCTracerFunctions.gone
 import com.kieltech.octracer.utils.OCTracerFunctions.hideSoftKeyboard
 import com.kieltech.octracer.utils.OCTracerFunctions.milliseconds
 import com.kieltech.octracer.utils.OCTracerFunctions.visible
+import com.kieltech.octracer.utils.Users
 import com.kieltech.octracer.utils.Utils
 import com.kieltech.octracer.view_models.LoginViewModel
 import kotlinx.coroutines.delay
@@ -44,10 +46,18 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        testCreds()
         checkSavedUser()
         setClickListeners()
         defineRolesSelector()
         defineViewModelObservers()
+    }
+
+    private fun testCreds() {
+        with(binding){
+            emailEditText.setText(Users.exampleEmail)
+            passwordEditText.setText(Users.examplePassword)
+        }
     }
 
     override fun onLoginStart() {
@@ -136,6 +146,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
                         val userCredentials = LoginValidation.LoginCredentials(
                             email = email, password = password
                         )
+                        val role = when(loginViewModel.currentCollection.value){
+                            Utils.adminCollection -> "admin"
+                            Utils.graduatesCollection -> "Graduate"
+                            else -> null
+                        }
+                        Log.d(TAG, "setClickListeners: $role - $userCredentials")
                         loginViewModel.login(
                             context = this@LoginActivity,
                             userInputCredentials = userCredentials,
@@ -151,6 +167,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
         userSharedPref.apply {
             val uid = getString(Constants.SHARED_PREF_UID, null)
             val role = getString(Constants.SHARED_PREF_ROLE, null)
+            Log.d(TAG, "checkSavedUser: $uid - $role")
 
             if (uid != null && role != null) {
                 // there is a user

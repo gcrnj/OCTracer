@@ -8,6 +8,7 @@ import com.kieltech.octracer.R
 import com.kieltech.octracer.base.BaseActivity
 import com.kieltech.octracer.data.Graduate
 import com.kieltech.octracer.databinding.ActivityRegisterBinding
+import com.kieltech.octracer.utils.Constants
 import com.kieltech.octracer.utils.OCTracerFunctions.createViewModel
 import com.kieltech.octracer.utils.OCTracerFunctions.disabled
 import com.kieltech.octracer.utils.OCTracerFunctions.enabled
@@ -15,6 +16,7 @@ import com.kieltech.octracer.utils.OCTracerFunctions.gone
 import com.kieltech.octracer.utils.OCTracerFunctions.hideSoftKeyboard
 import com.kieltech.octracer.utils.OCTracerFunctions.milliseconds
 import com.kieltech.octracer.utils.OCTracerFunctions.visible
+import com.kieltech.octracer.utils.Users
 import com.kieltech.octracer.utils.Utils
 import com.kieltech.octracer.view_models.RegisterViewModel
 import kotlinx.coroutines.delay
@@ -39,16 +41,16 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterB
 
     private fun testCreds() {
         binding.apply {
-            firstNameEditText.setText( "Pikoy")
-            middleNameEditText.setText( "Basta")
-            lastNameEditText.setText( "Last Name")
-            yearGraduatedEditText.setText( "1999")
-            addressEditText.setText( "Taga Didto Basta")
-            mobileNumberEditText.setText( "09123456789")
-            occupationEditText.setText( "Crew")
-            emailEditText.setText( "first@second.com")
-            passwordEditText.setText( "12345678")
-            confirmPasswordEditText.setText( "12345678")
+            firstNameEditText.setText( Users.exampleFirstName)
+            middleNameEditText.setText( Users.exampleMidName)
+            lastNameEditText.setText( Users.exampleLastName)
+            yearGraduatedEditText.setText(Users.exampleYearGraduated)
+            addressEditText.setText(Users.exampleAddress)
+            mobileNumberEditText.setText(Users.exampleMobileNumber)
+            occupationEditText.setText(Users.exampleOccupation)
+            emailEditText.setText(Users.exampleEmail)
+            passwordEditText.setText(Users.examplePassword)
+            confirmPasswordEditText.setText(Users.examplePassword)
         }
     }
 

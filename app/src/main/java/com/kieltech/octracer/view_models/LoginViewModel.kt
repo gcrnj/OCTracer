@@ -1,6 +1,7 @@
 package com.kieltech.octracer.view_models
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,11 +11,13 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.kieltech.octracer.R
 import com.kieltech.octracer.ui.login.LoginListener
 import com.kieltech.octracer.ui.login.LoginValidation
+import com.kieltech.octracer.utils.OCTracerFunctions.generateAdminUser
 import com.kieltech.octracer.utils.OCTracerFunctions.generateGraduateUser
 import com.kieltech.octracer.utils.Utils
 import org.mindrot.jbcrypt.BCrypt
 
 class LoginViewModel : ViewModel() {
+    private val TAG = "LoginViewModel"
 
     private val _credentialsErrors = MutableLiveData<LoginValidation.LoginErrors?>()
     val credentialsErrors: LiveData<LoginValidation.LoginErrors?> = _credentialsErrors
@@ -105,6 +108,8 @@ class LoginViewModel : ViewModel() {
 
         val equalPasswords = BCrypt.checkpw(passwordInput, passwordFromDB)
 
+        Log.d(TAG, "userInputCredentials: $userInputCredentials")
+        Log.d(TAG, "credentialsFromDB: $credentialsFromDB")
         val userFound = emailInput == emailFromDB && equalPasswords
 
         val collection = _currentCollection.value
@@ -121,12 +126,12 @@ class LoginViewModel : ViewModel() {
                     )
                 }
                 Utils.adminCollection -> {
-                    val graduate = userDocument.generateGraduateUser()
+                    val admin = userDocument.generateAdminUser()
                     loginListener.onLoginSuccess(
                         currentCollection.value?.id.toString(),
                         credentialsId,
-                        graduate,
-                        null
+                        null,
+                        admin
                     )
                 }
                 else -> {
@@ -164,12 +169,12 @@ class LoginViewModel : ViewModel() {
                         )
                     }
                     Utils.adminCollection -> {
-                        val graduate = userDocument.generateGraduateUser()
+                        val admin = userDocument.generateAdminUser()
                         loginListener.onLoginSuccess(
                             currentCollection.value?.id.toString(),
                             uid,
-                            graduate,
-                            null
+                            null,
+                            admin
                         )
                     }
                 }
