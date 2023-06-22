@@ -35,6 +35,21 @@ class HomeViewModel : ViewModel() {
             .addOnCompleteListener { }
     }
 
+    fun retrieveNumberOfGraduates(listener: GetGraduateListener){
+        val graduatesCollection = Utils.graduatesCollection
+        graduatesCollection
+            .get()
+            .addOnSuccessListener { snapshot ->
+                val retrievedGraduates = snapshot.map { doc ->
+                    doc.generateGraduateUser()
+                }
+                _graduates.value = retrievedGraduates
+                listener.onGetSuccess(retrievedGraduates)
+            }
+            .addOnFailureListener { }
+            .addOnCompleteListener { }
+    }
+
     fun changeRange(newRange: IntRange) {
         _selectedRange.value = newRange
     }
