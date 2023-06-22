@@ -41,14 +41,14 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterB
 
     private fun testCreds() {
         binding.apply {
-            firstNameEditText.setText(Users.exampleFirstName)
-            middleNameEditText.setText(Users.exampleMidName)
-            lastNameEditText.setText(Users.exampleLastName)
-            yearGraduatedEditText.setText(Users.exampleYearGraduated)
-            addressEditText.setText(Users.exampleAddress)
-            mobileNumberEditText.setText(Users.exampleMobileNumber)
-            occupationEditText.setText(Users.exampleOccupation)
-            emailEditText.setText(Users.exampleEmail)
+            firstNameEditText.setText(Utils.generateRandomFirstName())
+            middleNameEditText.setText(Utils.generateRandomMiddleName())
+            lastNameEditText.setText(Utils.generateRandomLastName())
+            yearGraduatedEditText.setText(Utils.generateRandomYearGraduated())
+            addressEditText.setText(Utils.generateRandomAddress())
+            mobileNumberEditText.setText(Utils.generateRandomMobileNumber())
+            occupationEditText.setText(Utils.generateRandomOccupation())
+            emailEditText.setText(Utils.generateRandomEmail())
             passwordEditText.setText(Users.examplePassword)
             confirmPasswordEditText.setText(Users.examplePassword)
         }

@@ -48,7 +48,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        testCreds()
+        //testCreds()
         checkSavedUser()
         setClickListeners()
         defineRolesSelector()
