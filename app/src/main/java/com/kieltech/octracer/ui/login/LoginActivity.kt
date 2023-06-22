@@ -1,5 +1,6 @@
 package com.kieltech.octracer.ui.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
@@ -9,6 +10,7 @@ import com.kieltech.octracer.base.BaseActivity
 import com.kieltech.octracer.data.Admin
 import com.kieltech.octracer.data.Graduate
 import com.kieltech.octracer.databinding.ActivityLoginBinding
+import com.kieltech.octracer.ui.register.RegisterActivity
 import com.kieltech.octracer.utils.Constants
 import com.kieltech.octracer.utils.OCTracerFunctions.createViewModel
 import com.kieltech.octracer.utils.OCTracerFunctions.disabled
@@ -54,7 +56,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
     }
 
     private fun testCreds() {
-        with(binding){
+        with(binding) {
             emailEditText.setText(Users.exampleEmail)
             passwordEditText.setText(Users.examplePassword)
         }
@@ -67,19 +69,26 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
         hideSoftKeyboard()
     }
 
-    override fun onLoginSuccess(collectionId: String, firestoreUserId: String, graduate: Graduate?, admin: Admin?) {
-        if(graduate != null){
+    override fun onLoginSuccess(
+        collectionId: String,
+        firestoreUserId: String,
+        graduate: Graduate?,
+        admin: Admin?
+    ) {
+        if (graduate != null) {
             saveUserAndGoToGraduatesLanding(
                 collectionId = collectionId,
                 firestoreUserId = firestoreUserId,
                 graduateUser = graduate,
-                shouldLoginAutomatically = true)
-        } else if (admin != null){
+                shouldLoginAutomatically = true
+            )
+        } else if (admin != null) {
             saveUserAndGoToAdminLanding(
                 collectionId = collectionId,
                 firestoreUserId = firestoreUserId,
                 admin = admin,
-                shouldLoginAutomatically = true)
+                shouldLoginAutomatically = true
+            )
         }
     }
 
@@ -125,6 +134,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
 
     private fun setClickListeners() {
         with(binding) {
+            registerButton.setOnClickListener {
+                startActivity(
+                    Intent(this@LoginActivity, RegisterActivity::class.java).addFlags(
+                        Intent.FLAG_ACTIVITY_SINGLE_TOP
+                    )
+                )
+            }
             loginButton.setOnClickListener {
                 lifecycleScope.launch {
                     onLoginStart()
@@ -146,7 +162,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
                         val userCredentials = LoginValidation.LoginCredentials(
                             email = email, password = password
                         )
-                        val role = when(loginViewModel.currentCollection.value){
+                        val role = when (loginViewModel.currentCollection.value) {
                             Utils.adminCollection -> "admin"
                             Utils.graduatesCollection -> "Graduate"
                             else -> null
@@ -181,7 +197,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
                         Utils.graduatesCollection
                     }
                 }
-                loginViewModel.retrieveUserData(this@LoginActivity, collection, uid, this@LoginActivity)
+                loginViewModel.retrieveUserData(
+                    this@LoginActivity,
+                    collection,
+                    uid,
+                    this@LoginActivity
+                )
 
             }
         }
