@@ -35,5 +35,6 @@
     <string name="this_input_is_invalid">This input is invalid</string>
     <string name="this_field_cannot_be_empty">This field cannot be empty</string>
     <string name="password_should_match">Password should match</string>
+    <string name="this_email_is_already_taken">This email is already taken</string>
 
 </resources>

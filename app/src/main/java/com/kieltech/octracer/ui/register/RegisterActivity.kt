@@ -50,13 +50,13 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterB
 
     private fun testCreds() {
         binding.apply {
-            firstNameEditText.setText( "First")
-            middleNameEditText.setText( "First")
-            lastNameEditText.setText( "First")
+            firstNameEditText.setText( "Pikoy")
+            middleNameEditText.setText( "Basta")
+            lastNameEditText.setText( "Last Name")
             yearGraduatedEditText.setText( "1999")
-            addressEditText.setText( "First")
+            addressEditText.setText( "Taga Didto Basta")
             mobileNumberEditText.setText( "09123456789")
-            occupationEditText.setText( "First")
+            occupationEditText.setText( "Crew")
             emailEditText.setText( "first@second.com")
             passwordEditText.setText( "12345678")
             confirmPasswordEditText.setText( "12345678")
@@ -114,7 +114,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterB
                             mobile_number = mobileNumberEditText.text.toString(),
                             occupation = occupationEditText.text.toString(),
                             year_graduated = yearGraduatedEditText.text.toString(),
-                            email = emailEditText.text.toString(),
+                            email = emailEditText.text.toString().lowercase(),
                             password = passwordEditText.text.toString(),
                         )
                         Log.d(

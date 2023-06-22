@@ -10,6 +10,7 @@ import com.kieltech.octracer.R
 import com.kieltech.octracer.data.Graduate
 import com.kieltech.octracer.ui.register.RegisterListener
 import com.kieltech.octracer.ui.register.RegisterValidation
+import com.kieltech.octracer.utils.Constants
 import com.kieltech.octracer.utils.OCTracerFunctions.hashPassword
 import com.kieltech.octracer.utils.OCTracerFunctions.toHashMap
 
@@ -53,7 +54,35 @@ class RegisterViewModel : ViewModel() {
         }
 
         //register
-        regiserGradute(context, graduate, listener)
+        val collection = _currentCollection.value
+        graduate.hashPassword()
+        if (collection == null) {
+            Toast.makeText(context, context.getString(R.string.role_not_found), Toast.LENGTH_SHORT)
+                .show()
+            return
+        }
+        collection.whereEqualTo(Constants.EMAIL_KEY, graduate.email)
+            .get()
+            .addOnSuccessListener { snapshot->
+                if(snapshot.isEmpty){
+                    // no user with same email
+                    // register
+                    regiserGradute(context, graduate, listener)
+                } else {
+                    // email is taken
+                    val newError = RegisterValidation.Companion.GraduateErrors(
+                        email = context.getString(R.string.this_email_is_already_taken)
+                    )
+                    setNewErrors(newError)
+                    listener.onRegisterProcessDone()
+                }
+            }
+            .addOnFailureListener { error ->
+                // Error
+                Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
+                listener.onRegisterProcessDone()
+            }
+
     }
 
     private fun regiserGradute(

@@ -16,6 +16,7 @@ object Constants {
     const val SUPER_ADMIN_COLLECTION_PATH: String = "super_admin"
     const val ADMIN_COLLECTION_PATH: String = "admin"
     const val GRADUATES_COLLECTION_PATH: String = "graduates"
+    const val EMAIL_KEY: String = "email"
 
     // REGISTER CONSTANTS
     const val NAME_MIN_LENGTH = 2
