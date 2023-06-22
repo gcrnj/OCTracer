@@ -2,4 +2,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/homeDrawerMenu" android:title="@string/home"/>
     <item android:id="@+id/registeredListDrawerMenu" android:title="@string/registered_list"/>
+<!--    <item android:id="@+id/verificationDrawerMenu" android:title="@string/registered_list"/>-->
 </menu>
