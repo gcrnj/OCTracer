@@ -16,7 +16,7 @@ data class Graduate(
     val address: String? = "",
     val mobile_number: String? = "",
     val occupation: String? = "",
-    val year_graduated: String? = "",
+    val year_graduated: Int? = 0,
     val email: String? = "",
     var password: String? = "",
 ) : Parcelable {
@@ -45,7 +45,7 @@ data class Graduate(
             address,
             mobile_number,
             occupation,
-            year_graduated,
+            year_graduated.toString(),
             email,
             password,
             confirmPassword

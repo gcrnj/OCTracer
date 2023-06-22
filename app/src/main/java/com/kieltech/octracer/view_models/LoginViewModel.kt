@@ -162,7 +162,7 @@ class LoginViewModel : ViewModel() {
                     Utils.graduatesCollection -> {
                         val graduate = userDocument.generateGraduateUser()
                         loginListener.onLoginSuccess(
-                            currentCollection.value?.id.toString(),
+                            collection.id,
                             uid,
                             graduate,
                             null
@@ -171,7 +171,7 @@ class LoginViewModel : ViewModel() {
                     Utils.adminCollection -> {
                         val admin = userDocument.generateAdminUser()
                         loginListener.onLoginSuccess(
-                            currentCollection.value?.id.toString(),
+                            collection.id,
                             uid,
                             null,
                             admin

@@ -41,9 +41,9 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterB
 
     private fun testCreds() {
         binding.apply {
-            firstNameEditText.setText( Users.exampleFirstName)
-            middleNameEditText.setText( Users.exampleMidName)
-            lastNameEditText.setText( Users.exampleLastName)
+            firstNameEditText.setText(Users.exampleFirstName)
+            middleNameEditText.setText(Users.exampleMidName)
+            lastNameEditText.setText(Users.exampleLastName)
             yearGraduatedEditText.setText(Users.exampleYearGraduated)
             addressEditText.setText(Users.exampleAddress)
             mobileNumberEditText.setText(Users.exampleMobileNumber)
@@ -62,12 +62,17 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterB
         }
     }
 
-    override fun onRegisterSuccess(collectionId: String, firestoreUserId: String, graduate: Graduate) {
+    override fun onRegisterSuccess(
+        collectionId: String,
+        firestoreUserId: String,
+        graduate: Graduate
+    ) {
         saveUserAndGoToGraduatesLanding(
             collectionId = collectionId,
             firestoreUserId = firestoreUserId,
             graduateUser = graduate,
-            shouldLoginAutomatically = false)
+            shouldLoginAutomatically = false
+        )
     }
 
     override fun onRegisterProcessDone() {
@@ -106,7 +111,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterB
                             address = addressEditText.text.toString(),
                             mobile_number = mobileNumberEditText.text.toString(),
                             occupation = occupationEditText.text.toString(),
-                            year_graduated = yearGraduatedEditText.text.toString(),
+                            year_graduated = yearGraduatedEditText.text.toString().toIntOrNull(),
                             email = emailEditText.text.toString().lowercase(),
                             password = passwordEditText.text.toString(),
                         )

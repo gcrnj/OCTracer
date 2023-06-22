@@ -3,7 +3,7 @@ package com.kieltech.octracer.ui.landing.graduates
 import android.os.Bundle
 import com.kieltech.octracer.base.BaseActivity
 import com.kieltech.octracer.databinding.ActivityGraduatesLandingBinding
-import com.kieltech.octracer.ui.profile.FragmentViewModel
+import com.kieltech.octracer.view_models.FragmentViewModel
 import com.kieltech.octracer.ui.profile.ProfileFragment
 import com.kieltech.octracer.utils.Constants
 import com.kieltech.octracer.utils.OCTracerFunctions.createViewModel
@@ -11,7 +11,7 @@ import com.kieltech.octracer.utils.OCTracerFunctions.createViewModel
 class GraduatesLandingActivity :
     BaseActivity<ActivityGraduatesLandingBinding>(ActivityGraduatesLandingBinding::inflate) {
 
-    val fragmentViewModel : FragmentViewModel by lazy {
+    private val fragmentViewModel : FragmentViewModel by lazy {
         createViewModel()
     }
     override fun onCreate(savedInstanceState: Bundle?) {

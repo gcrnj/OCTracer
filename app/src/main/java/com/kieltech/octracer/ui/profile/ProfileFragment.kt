@@ -58,7 +58,7 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding>(FragmentProfileBi
                 addressTextView.text = address
                 phoneNumberTextView.text = mobile_number
                 occupationTextView.text = occupation
-                yearGraduatedTextView.text = year_graduated
+                yearGraduatedTextView.text = year_graduated?.toString()
             }
         }
     }
