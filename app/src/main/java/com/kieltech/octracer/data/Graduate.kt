@@ -23,6 +23,13 @@ data class Graduate(
 
     @IgnoredOnParcel
     private val TAG = "Graduate"
+
+    fun fullName(): String {
+        val newMiddleName = if (middle_name.isNullOrBlank()) "" else middle_name.trim()
+        val newLastName = " $last_name"
+        return "$first_name$newMiddleName$newLastName"
+    }
+
     fun hashPassword() {
         Log.d(TAG, "oldPass: $password")
         val hashedPass = password?.hashPassword()
