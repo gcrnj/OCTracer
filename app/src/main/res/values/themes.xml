@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.OCTracer" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
+    <style name="Theme.OCTracer" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/white</item>
+        <item name="materialButtonStyle">@style/OCTracer.Button</item>
+    </style>
+
+    <style name="OCTracer.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="backgroundTint">@color/maroon</item>
+    </style>
+
+    <style name="OCTracer.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+        <item name="android:textColor">@color/white</item>
+        <item name="backgroundTint">@color/maroon</item>
+    </style>
+
+    <style name="Theme.OCTracer.Graduate.Info.Title" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">@dimen/title_medium_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Theme.OCTracer.Graduate.Info.Value.Medium" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">@dimen/body_medium_text_size</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Theme.OCTracer.Graduate.Info.Value.Small" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">@dimen/body_medium_text_size</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>

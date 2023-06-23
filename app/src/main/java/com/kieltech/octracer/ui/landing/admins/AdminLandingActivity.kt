@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.widget.SearchView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import com.kieltech.octracer.R
 import com.kieltech.octracer.base.BaseActivity
@@ -170,11 +171,17 @@ class AdminLandingActivity :
 
             when (newFragment) {
                 is HomeFragment -> {
+                    binding.root.setBackgroundColor(ContextCompat.getColor(this, R.color.activities_background))
                     binding.navigationView.setCheckedItem(R.id.homeDrawerMenu)
                 }
 
                 is ListFragment -> {
                     binding.navigationView.setCheckedItem(R.id.registeredListDrawerMenu)
+                    binding.root.setBackgroundColor(ContextCompat.getColor(this, R.color.activities_background))
+                }
+
+                is ProfileFragment -> {
+                    binding.root.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_gray))
                 }
             }
         }

@@ -8,7 +8,11 @@
     <dimen name="profile_pic_size_small">100dp</dimen>
 
     <dimen name="title_text_size">20sp</dimen>
+    <dimen name="title_medium_text_size">18sp</dimen>
+    <dimen name="body_medium_text_size">15sp</dimen>
+    <dimen name="body_small_text_size">12sp</dimen>
     <dimen name="profile_card_padding">3sp</dimen>
     <dimen name="list_divider_size">5sp</dimen>
+    <dimen name="list_divider_large_size">15sp</dimen>
 
 </resources>

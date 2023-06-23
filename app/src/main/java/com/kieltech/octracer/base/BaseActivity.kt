@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.widget.ImageView
@@ -46,6 +47,11 @@ open class BaseActivity<VB : ViewBinding>(
     private lateinit var uploadProfileListener: UploadProfileListener
     private val storage by lazy {
         Firebase.storage
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding.root.setBackgroundColor(ContextCompat.getColor(this, R.color.activities_background))
     }
 
     fun saveUserAndGoToGraduatesLanding(

@@ -6,109 +6,214 @@
     android:layout_height="match_parent"
     tools:context=".ui.profile.ProfileFragment">
 
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingHorizontal="@dimen/activity_horizontal_margin"
-        android:paddingVertical="@dimen/activity_horizontal_margin">
+        android:layout_height="@dimen/profile_pic_size_small"
+        android:background="@color/black"
+        android:paddingTop="@dimen/activity_horizontal_margin" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/profilePicCardView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/black"
-            app:cardCornerRadius="@dimen/profile_pic_size"
-            app:contentPadding="@dimen/profile_card_padding">
-
-            <androidx.constraintlayout.utils.widget.ImageFilterView
-                android:id="@+id/profilePicImageView"
-                android:layout_width="@dimen/profile_pic_size"
-                android:layout_height="@dimen/profile_pic_size"
-                android:background="@color/maroon"
-                app:roundPercent="1"
-                tools:src="@tools:sample/avatars" />
-        </androidx.cardview.widget.CardView>
-
-        <com.google.android.material.progressindicator.LinearProgressIndicator
-            android:id="@+id/uploadProfileProgressIndicator"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            tools:visibility="visible" />
-
-        <Button
-            android:id="@+id/uploadProfilePictureButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/upload_edit_profile_picture"
-            android:textAllCaps="false" />
-
-        <TextView
-            android:id="@+id/fullNameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            tools:text="Hello" />
-
-        <TextView
-            android:id="@+id/addressTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            tools:text="Hello" />
-
-        <TextView
-            android:id="@+id/phoneNumberTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            tools:text="Hello" />
-
-        <TextView
-            android:id="@+id/occupationTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            tools:text="Hello" />
-
-        <TextView
-            android:id="@+id/yearGraduatedTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            tools:text="Hello" />
-
-        <Button
-            android:id="@+id/logoutButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/logout"
-            android:visibility="gone"
-            tools:visibility="visible" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/adminActionButtonsLinearLayout"
+            android:id="@+id/userDetailsLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/activity_horizontal_margin"
+            android:paddingVertical="@dimen/activity_horizontal_margin">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/profilePicCardView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/black"
+                app:cardCornerRadius="@dimen/profile_pic_size"
+                app:contentPadding="@dimen/profile_card_padding">
+
+                <androidx.constraintlayout.utils.widget.ImageFilterView
+                    android:id="@+id/profilePicImageView"
+                    android:layout_width="@dimen/profile_pic_size"
+                    android:layout_height="@dimen/profile_pic_size"
+                    android:background="@color/maroon"
+                    app:roundPercent="1"
+                    tools:src="@tools:sample/avatars" />
+            </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/uploadProfileProgressIndicator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:visibility="visible" />
 
             <Button
-                android:id="@+id/backButton"
-                android:layout_width="0dp"
+                android:id="@+id/uploadProfilePictureButton"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/back" />
+                android:text="@string/upload_edit_profile_picture"
+                android:textAllCaps="false" />
 
-            <View
-                android:layout_width="@dimen/list_divider_size"
-                android:layout_height="0dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/list_divider_large_size"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/fullNameTitleTextView"
+                    style="@style/Theme.OCTracer.Graduate.Info.Title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/list_divider_size"
+                    android:layout_weight="3"
+                    android:gravity="start"
+                    android:text="@string/name" />
+
+                <TextView
+                    android:id="@+id/fullNameTextView"
+                    style="@style/Theme.OCTracer.Graduate.Info.Value.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_weight="5"
+                    android:gravity="start"
+                    tools:text="@tools:sample/full_names" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/list_divider_large_size"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/addressTitleTextView"
+                    style="@style/Theme.OCTracer.Graduate.Info.Title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="start"
+                    android:text="@string/address" />
+
+                <TextView
+                    android:id="@+id/addressTextView"
+                    android:layout_width="0dp"
+                    style="@style/Theme.OCTracer.Graduate.Info.Value.Medium"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    tools:text="@tools:sample/cities" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/list_divider_large_size"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/phoneNumberTitleTextView"
+                    style="@style/Theme.OCTracer.Graduate.Info.Title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="start"
+                    android:text="@string/phone_no" />
+
+                <TextView
+                    android:id="@+id/phoneNumberTextView"
+                    style="@style/Theme.OCTracer.Graduate.Info.Value.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    tools:text="@tools:sample/us_phones" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/list_divider_large_size"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/occupationTitleTextView"
+                    style="@style/Theme.OCTracer.Graduate.Info.Title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="start"
+                    android:text="@string/occupation" />
+
+                <TextView
+                    android:id="@+id/occupationTextView"
+                    android:layout_width="0dp"
+                    style="@style/Theme.OCTracer.Graduate.Info.Value.Medium"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    tools:text="@tools:sample/us_zipcodes" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/list_divider_large_size"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/yearGraduatedTitleTextView"
+                    style="@style/Theme.OCTracer.Graduate.Info.Title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="start"
+                    android:text="@string/year_graduated" />
+
+                <TextView
+                    android:id="@+id/yearGraduatedTextView"
+                    android:layout_width="0dp"
+                    style="@style/Theme.OCTracer.Graduate.Info.Value.Medium"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    tools:text="@tools:sample/us_zipcodes" />
+            </LinearLayout>
 
             <Button
-                android:id="@+id/editButton"
-                android:layout_width="0dp"
+                android:id="@+id/logoutButton"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/edit" />
+                android:text="@string/logout"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/adminActionButtonsLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/backButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/back" />
+
+                <View
+                    android:layout_width="@dimen/list_divider_size"
+                    android:layout_height="0dp" />
+
+                <Button
+                    android:id="@+id/editButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/edit" />
+            </LinearLayout>
+
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

@@ -113,6 +113,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         with(binding) {
             adminActionButtonsLinearLayout.visible()
             logoutButton.gone()
+            profilePicCardView.visible()
+            logoutButton.gone()
+            uploadProfilePictureButton.gone()
+            uploadProfileProgressIndicator.gone()
         }
     }
 

@@ -47,5 +47,7 @@
 
     <string name="profile_pic_path">images/%1$s.jpg</string>
     <string name="upload_edit_profile_picture">Upload / Update Profile Picure</string>
+    <string name="name">Name</string>
+    <string name="phone_no">Phone No.</string>
 
 </resources>
