@@ -33,6 +33,13 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding>(FragmentProfileBi
             // Set UI for Admin
             setUIForAdmin()
         }
+        setOnClickListeners()
+    }
+
+    private fun setOnClickListeners() {
+        binding.logoutButton.setOnClickListener {
+            baseActivity.logoutUser()
+        }
     }
 
     private fun setUIForAdmin() {
