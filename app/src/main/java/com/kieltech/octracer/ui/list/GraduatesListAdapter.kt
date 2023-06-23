@@ -43,7 +43,14 @@ class GraduatesListAdapter(
 
 
         fun bind(item: Graduate, position: Int) {
+            val graduateId = item.id
             with(binding) {
+                if (!graduateId.isNullOrBlank()) {
+                    adminLandingActivity.setProfileImageView(
+                        graduateId,
+                        binding.profilePicImageView
+                    )
+                }
                 verificationButtonsLinearLayout.visibleOrGone(showVerificationButtons)
                 fullNameTextView.text = item.fullName()
                 root.setOnClickListener {

@@ -30,6 +30,7 @@ class HomeViewModel : ViewModel() {
         val graduatesCollection = Utils.graduatesCollection
 
         graduatesCollection
+            .whereEqualTo(Constants.IS_VERIFIED_KEY, true)
             .whereGreaterThanOrEqualTo(Constants.GRADUATED_YEAR_KEY, from)
             .whereLessThanOrEqualTo(Constants.GRADUATED_YEAR_KEY, to)
             .get()
@@ -44,7 +45,7 @@ class HomeViewModel : ViewModel() {
 
     fun retrieveNumberOfGraduates(listener: GetGraduateListener) {
         val graduatesCollection = Utils.graduatesCollection
-        graduatesCollection
+        graduatesCollection.whereEqualTo(Constants.IS_VERIFIED_KEY, true)
             .get()
             .addOnSuccessListener { snapshot ->
                 val retrievedGraduates = retrievedGraduates(snapshot)

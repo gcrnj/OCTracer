@@ -36,7 +36,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private fun defineViewModelObservers() {
         homeViewModel.selectedRange.observe(viewLifecycleOwner) { range ->
             range?.apply {
-                homeViewModel.retrieveNumberOfGraduates(first, last, this@HomeFragment)
+                homeViewModel.retrieveNumberOfGraduates(this@HomeFragment)
             }
         }
         homeViewModel.graduates.observe(viewLifecycleOwner) { graduates ->
