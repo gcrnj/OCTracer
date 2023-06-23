@@ -118,7 +118,7 @@ open class BaseActivity<VB : ViewBinding>(
         return Users.GraduateUser
     }
 
-    val pickImageLauncher =
+    private val pickImageLauncher =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             if (uri != null) {
                 filePath = uri

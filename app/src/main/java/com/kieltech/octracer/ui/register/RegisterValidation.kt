@@ -43,13 +43,13 @@ class RegisterValidation {
                     )
                     valid = false
                 }
-                if (middle_name.isNullOrEmpty() || middle_name.length < Constants.NAME_MIN_LENGTH) {
-                    middleNameError = context.getString(
-                        R.string.this_field_requires_minimum_characters,
-                        Constants.NAME_MIN_LENGTH
-                    )
-                    valid = false
-                }
+//                if (middle_name.isNullOrEmpty() || middle_name.length < Constants.NAME_MIN_LENGTH) {
+//                    middleNameError = context.getString(
+//                        R.string.this_field_requires_minimum_characters,
+//                        Constants.NAME_MIN_LENGTH
+//                    )
+//                    valid = false
+//                }
                 if (last_name.isNullOrEmpty() || last_name.length < Constants.NAME_MIN_LENGTH) {
                     lastNameError = context.getString(
                         R.string.this_field_requires_minimum_characters,
