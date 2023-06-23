@@ -57,7 +57,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/title_medium_text_size"
                 android:textStyle="bold"
-                tools:text="Registered users" />
+                android:text="@string/registered_users" />
         </LinearLayout>
     </LinearLayout>
 
