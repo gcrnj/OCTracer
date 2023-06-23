@@ -31,11 +31,11 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        reloadData()
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun reloadData() {
+        super.reloadData()
         homeViewModel.retrieveNumberOfGraduates(this)
     }
 

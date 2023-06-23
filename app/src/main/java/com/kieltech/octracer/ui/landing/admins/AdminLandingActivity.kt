@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import com.kieltech.octracer.R
 import com.kieltech.octracer.base.BaseActivity
+import com.kieltech.octracer.base.BaseFragment
 import com.kieltech.octracer.data.Graduate
 import com.kieltech.octracer.databinding.ActivityAdminLandingBinding
 import com.kieltech.octracer.ui.home.HomeFragment
@@ -162,13 +163,14 @@ class AdminLandingActivity :
             newFragment?.let {
                 supportFragmentManager.beginTransaction().apply {
                     supportFragmentManager.fragments.forEach {
-                        remove(it)
+                        hide(it)
                     }
                     val foundFragment =
-                        supportFragmentManager.findFragmentByTag(newFragment.title())
+                        supportFragmentManager.findFragmentByTag(newFragment.title()) as? BaseFragment<*>
                     if (foundFragment != null) {
                         //show the selected.
                         show(foundFragment)
+                        foundFragment.reloadData()
                     } else {
                         //add the selected
                         add(

@@ -52,15 +52,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setFirstGraduate()
-        if (baseActivity.getGraduateUser() != null) {
-            // Set UI for Graduates
-            setUIForGraduates()
-        } else {
-            // Set UI for Admin
-            setUIForAdmin()
-        }
         setOnClickListeners()
         defineViewModelObservers()
+        reloadData()
     }
 
     private fun setProfilePicture(collectionId: String) {
@@ -151,5 +145,15 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             }
         }
 
+    override fun reloadData() {
+        super.reloadData()
+        if (baseActivity.getGraduateUser() != null) {
+            // Set UI for Graduates
+            setUIForGraduates()
+        } else {
+            // Set UI for Admin
+            setUIForAdmin()
+        }
+    }
 
 }

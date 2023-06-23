@@ -2,6 +2,7 @@ package com.kieltech.octracer.ui.home
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.kieltech.octracer.base.BaseFragment
 import com.kieltech.octracer.data.Graduate
 import com.kieltech.octracer.databinding.FragmentHomeBinding
@@ -30,25 +31,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         super.onViewCreated(view, savedInstanceState)
 
         defineViewModelObservers()
+        reloadData()
     }
 
 
     private fun defineViewModelObservers() {
-        homeViewModel.selectedRange.observe(viewLifecycleOwner) { range ->
-            range?.apply {
-                homeViewModel.retrieveNumberOfGraduates(this@HomeFragment)
-            }
-        }
         homeViewModel.graduates.observe(viewLifecycleOwner) { graduates ->
-            binding.graduatesCountTextView.text = graduates?.size?.toString() ?: "N/A"
+            val number = when(graduates?.size){
+                0-> "No"
+                null -> "No"
+                else -> graduates.size.toString()
+            }
+            binding.graduatesCountTextView.text = number
         }
-
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        homeViewModel.changeRange(1990..2000)
+    override fun reloadData() {
+        super.reloadData()
+        homeViewModel.retrieveNumberOfGraduates(this@HomeFragment)
     }
 
 }

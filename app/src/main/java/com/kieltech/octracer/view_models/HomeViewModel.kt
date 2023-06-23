@@ -18,6 +18,9 @@ class HomeViewModel : ViewModel() {
     private val _graduates = MutableLiveData<List<Graduate>?>()
     val graduates: LiveData<List<Graduate>?> = _graduates
 
+    private val _unverifiedGraduates = MutableLiveData<List<Graduate>?>()
+    val unverifiedGraduates: LiveData<List<Graduate>?> = _unverifiedGraduates
+
     private fun retrievedGraduates(snapshot: QuerySnapshot): List<Graduate> {
         return snapshot.map { doc ->
             val generatedGraduate = doc.generateGraduateUser()
@@ -56,7 +59,7 @@ class HomeViewModel : ViewModel() {
             .addOnCompleteListener { }
     }
 
-    fun retrieveNumberOfVerifiedGraduates(listener: GetGraduateListener) {
+    fun retrieveNumberOfUnverifiedGraduates(listener: GetGraduateListener) {
         val graduatesCollection = Utils.graduatesCollection
 
         graduatesCollection
@@ -64,7 +67,7 @@ class HomeViewModel : ViewModel() {
             .get()
             .addOnSuccessListener { snapshot ->
                 val retrievedGraduates = retrievedGraduates(snapshot)
-                _graduates.value = retrievedGraduates
+                _unverifiedGraduates.value = retrievedGraduates
                 listener.onGetSuccess(retrievedGraduates)
             }
             .addOnFailureListener {

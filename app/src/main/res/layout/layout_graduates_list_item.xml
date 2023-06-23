@@ -50,7 +50,7 @@
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"
                 android:layout_toEndOf="@id/profilePicCardView"
                 android:gravity="start"
-                android:textColor="@color/black"
+                android:textColor="@color/name_text_color"
                 android:textSize="@dimen/title_text_size"
                 tools:text="@tools:sample/full_names" />
         </RelativeLayout>

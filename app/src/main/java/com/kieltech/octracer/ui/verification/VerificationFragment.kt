@@ -60,7 +60,7 @@ class VerificationFragment :
 
             override fun onDone() {
                 binding.loading.gone()
-                refreshList()
+                reloadData()
             }
 
         }
@@ -91,19 +91,20 @@ class VerificationFragment :
         super.onViewCreated(view, savedInstanceState)
 
         defineViewModel()
-        refreshList()
+        reloadData()
     }
 
     private fun defineViewModel() {
-        homeViewModel.graduates.observe(viewLifecycleOwner) { graduates ->
+        homeViewModel.unverifiedGraduates.observe(viewLifecycleOwner) { graduates ->
             if (graduates != null) {
                 onGetSuccess(graduates)
             }
         }
     }
 
-    private fun refreshList() {
-        homeViewModel.retrieveNumberOfVerifiedGraduates(this)
+    override fun reloadData() {
+        super.reloadData()
+        homeViewModel.retrieveNumberOfUnverifiedGraduates(this)
     }
 
 

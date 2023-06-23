@@ -30,4 +30,6 @@ open class BaseFragment<VB : ViewBinding>(
     open fun title(): String {
         return javaClass.simpleName
     }
+
+    open fun reloadData() {}
 }

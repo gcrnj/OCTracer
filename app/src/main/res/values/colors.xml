@@ -13,4 +13,6 @@
     <color name="gray">#D8D8D8</color>
     <color name="dark_gray">#343434</color>
     <color name="activities_background">@color/list_background_color</color>
+
+    <color name="name_text_color">#343434</color>
 </resources>
