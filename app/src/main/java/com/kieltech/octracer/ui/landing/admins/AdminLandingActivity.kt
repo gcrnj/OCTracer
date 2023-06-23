@@ -1,8 +1,10 @@
 package com.kieltech.octracer.ui.landing.admins
 
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.widget.SearchView
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import com.kieltech.octracer.R
 import com.kieltech.octracer.base.BaseActivity
@@ -29,6 +31,20 @@ class AdminLandingActivity :
 
     private val searchView by lazy {
         findViewById<SearchView>(R.id.action_search)
+    }
+
+    private val logoutDialog by lazy {
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.logout))
+            .setMessage(getString(R.string.logout_message))
+            .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
+                dialog.dismiss()
+                logoutUser()
+            }
+            .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
     }
 
 
@@ -87,6 +103,13 @@ class AdminLandingActivity :
                         setListFragment()
                         drawerLayout.closeDrawer(GravityCompat.START)
                         true
+                    }
+
+                    R.id.logoutDrawerMenu -> {
+                        // Handle navigation item 2 selection
+                        logoutDialog.show()
+                        drawerLayout.closeDrawer(GravityCompat.START)
+                        false
                     }
 
                     else -> false
