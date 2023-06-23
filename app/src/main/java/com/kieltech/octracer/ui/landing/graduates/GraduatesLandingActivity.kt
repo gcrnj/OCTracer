@@ -1,6 +1,8 @@
 package com.kieltech.octracer.ui.landing.graduates
 
 import android.os.Bundle
+import androidx.core.content.ContextCompat
+import com.kieltech.octracer.R
 import com.kieltech.octracer.base.BaseActivity
 import com.kieltech.octracer.databinding.ActivityGraduatesLandingBinding
 import com.kieltech.octracer.view_models.FragmentViewModel
@@ -40,6 +42,15 @@ class GraduatesLandingActivity :
                     )
                 }
                 commit()
+
+                when(newFragment){
+                    is ProfileFragment ->{
+                        binding.root.setBackgroundColor(ContextCompat.getColor(this@GraduatesLandingActivity, R.color.dark_gray))
+                    }
+                    else ->{
+                        binding.root.setBackgroundColor(ContextCompat.getColor(this@GraduatesLandingActivity, R.color.activities_background))
+                    }
+                }
             }
             }
         }
