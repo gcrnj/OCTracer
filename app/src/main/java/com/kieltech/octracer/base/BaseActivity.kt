@@ -8,6 +8,7 @@ import com.kieltech.octracer.data.Admin
 import com.kieltech.octracer.data.Graduate
 import com.kieltech.octracer.ui.landing.admins.AdminLandingActivity
 import com.kieltech.octracer.ui.landing.graduates.GraduatesLandingActivity
+import com.kieltech.octracer.ui.register.RegisterActivity
 import com.kieltech.octracer.utils.Constants
 import com.kieltech.octracer.utils.Users
 
@@ -39,6 +40,12 @@ open class BaseActivity<VB : ViewBinding>(
             Users.GraduateUser = graduateUser
             // Go to graduate dashboard
             startActivity(Intent(this, GraduatesLandingActivity::class.java))
+        }
+        if(this is RegisterActivity) {
+            val newIntent = Intent()
+            newIntent.putExtra(Constants.INTENT_EXTRA_UID, firestoreUserId)
+            newIntent.putExtra(Constants.INTENT_EXTRA_ROLE, collectionId)
+            setResult(RESULT_OK, newIntent)
         }
         finish()
     }

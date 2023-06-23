@@ -8,6 +8,10 @@ object Constants {
     const val SHARED_PREF_UID = "SHARED_PREF_UID"
     const val SHARED_PREF_ROLE = "SHARED_PREF_ROLE"
 
+    // INTENT EXTRAS
+    const val INTENT_EXTRA_UID = "INTENT_EXTRA_UID"
+    const val INTENT_EXTRA_ROLE = "INTENT_EXTRA_ROLE"
+
     // LOGIN CONSTANTS
     const val PASSWORD_MIN_LENGTH = 8
     const val INVALID_EMAIL = "Invalid Email Address"

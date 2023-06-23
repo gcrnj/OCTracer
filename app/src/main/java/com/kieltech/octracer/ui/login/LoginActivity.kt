@@ -4,7 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.kieltech.octracer.R
 import com.kieltech.octracer.base.BaseActivity
 import com.kieltech.octracer.data.Admin
@@ -135,11 +138,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
     private fun setClickListeners() {
         with(binding) {
             registerButton.setOnClickListener {
-                startActivity(
+                val registerIntent =
                     Intent(this@LoginActivity, RegisterActivity::class.java).addFlags(
                         Intent.FLAG_ACTIVITY_SINGLE_TOP
                     )
-                )
+                resultLauncher.launch(registerIntent)
             }
             loginButton.setOnClickListener {
                 lifecycleScope.launch {
@@ -207,5 +210,25 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
             }
         }
     }
+
+    private var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                // There are no request codes
+                val data: Intent? = result.data
+                val uid = data?.getStringExtra(Constants.INTENT_EXTRA_UID)
+                val role = data?.getStringExtra(Constants.INTENT_EXTRA_ROLE)
+                if (uid != null && role != null) {
+                    val collection = Firebase.firestore.collection(role)
+                    loginViewModel.retrieveUserData(
+                        this@LoginActivity,
+                        collection,
+                        uid,
+                        this@LoginActivity
+                    )
+                }
+            }
+        }
+
 
 }
