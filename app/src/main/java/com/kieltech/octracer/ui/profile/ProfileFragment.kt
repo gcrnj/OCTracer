@@ -1,12 +1,12 @@
 package com.kieltech.octracer.ui.profile
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.kieltech.octracer.R
 import com.kieltech.octracer.base.BaseFragment
 import com.kieltech.octracer.data.Graduate
 import com.kieltech.octracer.databinding.FragmentProfileBinding
@@ -17,14 +17,36 @@ import com.kieltech.octracer.utils.OCTracerFunctions.createViewModel
 import com.kieltech.octracer.utils.OCTracerFunctions.gone
 import com.kieltech.octracer.utils.OCTracerFunctions.parcelable
 import com.kieltech.octracer.utils.OCTracerFunctions.visible
-import com.kieltech.octracer.utils.Utils
 
-class ProfileFragment() : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
+class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate),
+    UploadProfileListener {
 
     private val TAG = "ProfileFragment"
 
     private val profileViewModel: ProfileViewModel by lazy {
         baseActivity.createViewModel()
+    }
+
+    override fun onUploadStarted() {
+        binding.uploadProfileProgressIndicator.visible()
+    }
+
+    override fun onUploadSuccess(uri: Uri) {
+        binding.profilePicImageView.setImageURI(uri)
+    }
+
+    override fun onUploadFailure(message: String) {
+        // failed
+    }
+
+    override fun onUploadLoading(newProgress: Int) {
+        binding.uploadProfileProgressIndicator.apply {
+            progress = newProgress
+        }
+    }
+
+    override fun onUploadDone() {
+        binding.uploadProfileProgressIndicator.gone()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,9 +63,16 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding>(FragmentProfileBi
         defineViewModelObservers()
     }
 
+    private fun setProfilePicture(collectionId: String) {
+        baseActivity.setProfileImageView(collectionId, binding.profilePicImageView)
+    }
+
     private fun defineViewModelObservers() {
-        profileViewModel.graduate.observe(viewLifecycleOwner) {
-            setTexts(it)
+        profileViewModel.graduate.observe(viewLifecycleOwner) { graduate->
+            if (graduate != null) {
+                setProfilePicture(graduate.id ?: "")
+            }
+            setTexts(graduate)
         }
     }
 
@@ -75,6 +104,9 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding>(FragmentProfileBi
                 resultLauncher.launch(newIntent)
             }
         }
+        binding.uploadProfilePictureButton.setOnClickListener {
+            baseActivity.openFileChooser(baseActivity.getGraduateUser()?.id!!, this)
+        }
     }
 
     private fun setUIForAdmin() {
@@ -88,6 +120,9 @@ class ProfileFragment() : BaseFragment<FragmentProfileBinding>(FragmentProfileBi
         with(binding) {
             adminActionButtonsLinearLayout.gone()
             logoutButton.visible()
+            profilePicCardView.visible()
+            uploadProfilePictureButton.visible()
+            uploadProfileProgressIndicator.gone()
         }
     }
 

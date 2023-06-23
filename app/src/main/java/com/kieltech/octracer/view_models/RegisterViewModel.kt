@@ -7,8 +7,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import com.kieltech.octracer.R
 import com.kieltech.octracer.data.Graduate
 import com.kieltech.octracer.ui.register.RegisterListener
@@ -64,7 +62,7 @@ class RegisterViewModel : ViewModel() {
                     // no user with same email
                     // register
                     regiserGradute(context, graduate, listener)
-                } else if (snapshot.size() == 1 && graduate.collectionId == snapshot.first().id && isEdit) {
+                } else if (snapshot.size() == 1 && graduate.id == snapshot.first().id && isEdit) {
                     // With user and is not new / edit only
                     editGraduate(context, graduate, listener)
                 } else {
@@ -123,9 +121,9 @@ class RegisterViewModel : ViewModel() {
         newRecordsHash.remove(Constants.TAG_KEY)
         newRecordsHash.remove(Constants.CREATOR_KEY)
         Log.d(TAG, "editGraduate: $newRecordsHash")
-        collection.document(graduate.collectionId!!).update(newRecordsHash)
+        collection.document(graduate.id!!).update(newRecordsHash)
             .addOnSuccessListener {
-                listener.onRegisterSuccess(collection.id, graduate.collectionId!!, graduate)
+                listener.onRegisterSuccess(collection.id, graduate.id!!, graduate)
             }
             .addOnFailureListener {
                 Toast.makeText(context, it.message.toString(), Toast.LENGTH_SHORT).show()

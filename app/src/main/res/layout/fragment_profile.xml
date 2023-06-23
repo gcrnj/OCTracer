@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,10 +14,36 @@
         android:paddingHorizontal="@dimen/activity_horizontal_margin"
         android:paddingVertical="@dimen/activity_horizontal_margin">
 
-        <androidx.constraintlayout.utils.widget.ImageFilterView
-            android:id="@+id/profilePicImageView"
-            android:layout_width="@dimen/profile_pic_size"
-            android:layout_height="@dimen/profile_pic_size" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/profilePicCardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/black"
+            app:cardCornerRadius="@dimen/profile_pic_size"
+            app:contentPadding="@dimen/profile_card_padding">
+
+            <androidx.constraintlayout.utils.widget.ImageFilterView
+                android:id="@+id/profilePicImageView"
+                android:layout_width="@dimen/profile_pic_size"
+                android:layout_height="@dimen/profile_pic_size"
+                android:background="@color/maroon"
+                app:roundPercent="1"
+                tools:src="@tools:sample/avatars" />
+        </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/uploadProfileProgressIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <Button
+            android:id="@+id/uploadProfilePictureButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/upload_edit_profile_picture"
+            android:textAllCaps="false" />
 
         <TextView
             android:id="@+id/fullNameTextView"
@@ -72,7 +99,7 @@
 
             <View
                 android:layout_width="@dimen/list_divider_size"
-                android:layout_height="0dp"/>
+                android:layout_height="0dp" />
 
             <Button
                 android:id="@+id/editButton"

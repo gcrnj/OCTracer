@@ -42,7 +42,7 @@ class HomeViewModel : ViewModel() {
             .addOnSuccessListener { snapshot ->
                 val retrievedGraduates = snapshot.map { doc ->
                     val generatedGraduate = doc.generateGraduateUser()
-                    generatedGraduate.collectionId = doc.id
+                    generatedGraduate.id = doc.id
                     generatedGraduate
                 }
                 _graduates.value = retrievedGraduates

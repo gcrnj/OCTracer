@@ -45,4 +45,7 @@
     <string name="yes">Yes</string>
     <string name="cancel">Cancel</string>
 
+    <string name="profile_pic_path">images/%1$s.jpg</string>
+    <string name="upload_edit_profile_picture">Upload / Update Profile Picure</string>
+
 </resources>

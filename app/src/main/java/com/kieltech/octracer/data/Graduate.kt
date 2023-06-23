@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Graduate(
-    var collectionId: String? = "",
+    var id: String? = "",
     val first_name: String? = "",
     val middle_name: String? = "",
     val last_name: String? = "",

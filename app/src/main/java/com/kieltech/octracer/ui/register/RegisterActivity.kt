@@ -135,7 +135,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterB
                         //Create graduate collection
                         val isEdit = graduateToEdit != null
                         val graduate = Graduate(
-                            collectionId = if(isEdit) graduateToEdit?.collectionId else null,
+                            id = if(isEdit) graduateToEdit?.id else null,
                             first_name = firstNameEditText.text.toString(),
                             middle_name = middleNameEditText.text.toString(),
                             last_name = lastNameEditText.text.toString(),
