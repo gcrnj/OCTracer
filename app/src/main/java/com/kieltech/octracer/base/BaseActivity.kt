@@ -74,10 +74,12 @@ open class BaseActivity<VB : ViewBinding>(
             startActivity(Intent(this, GraduatesLandingActivity::class.java))
         }
         if (this is RegisterActivity) {
+            finishAffinity()
             val newIntent = Intent()
             newIntent.putExtra(Constants.INTENT_EXTRA_UID, firestoreUserId)
             newIntent.putExtra(Constants.INTENT_EXTRA_ROLE, collectionId)
             newIntent.putExtra(Constants.GRADUATES_COLLECTION_PATH, graduateUser)
+            newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             setResult(RESULT_OK, newIntent)
         }
         finish()
@@ -113,6 +115,9 @@ open class BaseActivity<VB : ViewBinding>(
         finishAffinity()
         val intent = Intent(this, LoginActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        Users.GraduateUser = null
+        Users.AdminUser = null
+        Users.AdminUser = null
         startActivity(intent)
     }
 

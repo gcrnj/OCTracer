@@ -13,9 +13,10 @@ import com.kieltech.octracer.utils.OCTracerFunctions.createViewModel
 class GraduatesLandingActivity :
     BaseActivity<ActivityGraduatesLandingBinding>(ActivityGraduatesLandingBinding::inflate) {
 
-    private val fragmentViewModel : FragmentViewModel by lazy {
+    private val fragmentViewModel: FragmentViewModel by lazy {
         createViewModel()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -25,33 +26,44 @@ class GraduatesLandingActivity :
 
     private fun defineViewModelObservers() {
 
-        fragmentViewModel.selectedFragment.observe(this){ newFragment ->
+        fragmentViewModel.selectedFragment.observe(this) { newFragment ->
             newFragment?.let {
-            supportFragmentManager.beginTransaction().apply {
-                val foundFragment =
-                    supportFragmentManager.findFragmentByTag(newFragment.title())
-                if (foundFragment != null) {
-                    //show the selected.
-                    show(foundFragment)
-                } else {
-                    //add the selected
-                    add(
-                        binding.frameLayout.id,
-                        newFragment,
-                        newFragment.title()
-                    )
-                }
-                commit()
+                supportFragmentManager.beginTransaction().apply {
+                    val foundFragment =
+                        supportFragmentManager.findFragmentByTag(newFragment.title())
+                    if (foundFragment != null) {
+                        //show the selected.
+                        show(foundFragment)
+                    } else {
+                        //add the selected
+                        add(
+                            binding.frameLayout.id,
+                            newFragment,
+                            newFragment.title()
+                        )
+                    }
+                    commit()
 
-                when(newFragment){
-                    is ProfileFragment ->{
-                        binding.root.setBackgroundColor(ContextCompat.getColor(this@GraduatesLandingActivity, R.color.dark_gray))
-                    }
-                    else ->{
-                        binding.root.setBackgroundColor(ContextCompat.getColor(this@GraduatesLandingActivity, R.color.activities_background))
+                    when (newFragment) {
+                        is ProfileFragment -> {
+                            binding.root.setBackgroundColor(
+                                ContextCompat.getColor(
+                                    this@GraduatesLandingActivity,
+                                    R.color.dark_gray
+                                )
+                            )
+                        }
+
+                        else -> {
+                            binding.root.setBackgroundColor(
+                                ContextCompat.getColor(
+                                    this@GraduatesLandingActivity,
+                                    R.color.activities_background
+                                )
+                            )
+                        }
                     }
                 }
-            }
             }
         }
     }
