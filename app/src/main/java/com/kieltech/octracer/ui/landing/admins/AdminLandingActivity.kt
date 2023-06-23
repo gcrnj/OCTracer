@@ -1,6 +1,7 @@
 package com.kieltech.octracer.ui.landing.admins
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.widget.SearchView
 import androidx.activity.OnBackPressedCallback
@@ -15,6 +16,7 @@ import com.kieltech.octracer.databinding.ActivityAdminLandingBinding
 import com.kieltech.octracer.ui.home.HomeFragment
 import com.kieltech.octracer.ui.list.ListFragment
 import com.kieltech.octracer.ui.profile.ProfileFragment
+import com.kieltech.octracer.ui.search.SearchActivity
 import com.kieltech.octracer.ui.verification.VerificationFragment
 import com.kieltech.octracer.utils.Constants
 import com.kieltech.octracer.view_models.FragmentViewModel
@@ -81,7 +83,9 @@ class AdminLandingActivity :
         binding.apply {
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
-                    adminLandingViewModel.performSearch(query)
+                    val searchIntent = Intent(this@AdminLandingActivity, SearchActivity::class.java)
+                    searchIntent.putExtra(Constants.INTENT_EXTRA_SEARCH, query)
+                    startActivity(searchIntent)
                     return true
                 }
 
@@ -185,13 +189,23 @@ class AdminLandingActivity :
 
             when (newFragment) {
                 is HomeFragment -> {
-                    binding.root.setBackgroundColor(ContextCompat.getColor(this, R.color.activities_background))
+                    binding.root.setBackgroundColor(
+                        ContextCompat.getColor(
+                            this,
+                            R.color.activities_background
+                        )
+                    )
                     binding.navigationView.setCheckedItem(R.id.homeDrawerMenu)
                 }
 
                 is ListFragment -> {
                     binding.navigationView.setCheckedItem(R.id.registeredListDrawerMenu)
-                    binding.root.setBackgroundColor(ContextCompat.getColor(this, R.color.activities_background))
+                    binding.root.setBackgroundColor(
+                        ContextCompat.getColor(
+                            this,
+                            R.color.activities_background
+                        )
+                    )
                 }
 
                 is ProfileFragment -> {

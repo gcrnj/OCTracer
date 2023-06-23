@@ -81,7 +81,9 @@ object OCTracerFunctions {
     }
 
     fun DocumentSnapshot.generateGraduateUser(): Graduate {
-        return toObject(Graduate::class.java)!!
+        val graduate =  toObject(Graduate::class.java)!!
+        graduate.id = id
+        return graduate
     }
 
     fun DocumentSnapshot.generateAdminUser(): Admin {
