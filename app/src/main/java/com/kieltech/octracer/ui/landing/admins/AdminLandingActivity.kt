@@ -6,10 +6,12 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.view.GravityCompat
 import com.kieltech.octracer.R
 import com.kieltech.octracer.base.BaseActivity
+import com.kieltech.octracer.data.Graduate
 import com.kieltech.octracer.databinding.ActivityAdminLandingBinding
 import com.kieltech.octracer.ui.home.HomeFragment
 import com.kieltech.octracer.ui.list.ListFragment
 import com.kieltech.octracer.ui.profile.ProfileFragment
+import com.kieltech.octracer.utils.Constants
 import com.kieltech.octracer.view_models.FragmentViewModel
 import com.kieltech.octracer.utils.OCTracerFunctions.createViewModel
 import com.kieltech.octracer.view_models.AdminLandingViewModel
@@ -101,10 +103,20 @@ class AdminLandingActivity :
         )
     }
 
-    private fun setListFragment() {
+    fun setListFragment() {
         val listFragment = ListFragment()
         fragmentViewModel.changeFragment(
             newFragment = listFragment,
+        )
+    }
+
+    fun setGraduateProfileFragment(graduate: Graduate) {
+        val bundle = Bundle()
+        val profileFragment = ProfileFragment()
+        bundle.putParcelable(Constants.GRADUATES_COLLECTION_PATH, graduate)
+        profileFragment.arguments = bundle
+        fragmentViewModel.changeFragment(
+            newFragment = profileFragment,
         )
     }
 

@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="?attr/selectableItemBackground"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clipToPadding="true"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/list_divider_size">
+    android:paddingBottom="@dimen/list_divider_size"
+    app:contentPaddingBottom="@dimen/activity_horizontal_margin"
+    tools:showIn="@layout/fragment_list">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -37,16 +40,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:layout_toEndOf="@id/profilePicCardView"
             android:gravity="start"
             android:textColor="@color/black"
             android:textSize="@dimen/title_text_size"
             tools:text="@tools:sample/full_names" />
     </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/list_divider_size"
-        android:background="@android:color/transparent" />
-</LinearLayout>
+</androidx.cardview.widget.CardView>
