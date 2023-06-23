@@ -60,8 +60,11 @@ open class BaseActivity<VB : ViewBinding>(
         graduateUser: Graduate,
         shouldLoginAutomatically: Boolean,
     ) {
+        //Might be login - shouldLoginAutomatically - Go to GraduatesLanding
+        //Might be register - shouldLoginAutomatically - Go to GraduatesLanding
+        //Might be edit - not shouldLoginAutomatically
         if (shouldLoginAutomatically) {
-            // Registered by no user / graduate
+            // Go to graduates. OK
             // Save info
             userSharedPref.edit().apply {
                 putString(Constants.SHARED_PREF_UID, firestoreUserId)
@@ -70,11 +73,12 @@ open class BaseActivity<VB : ViewBinding>(
             }
             graduateUser.id = firestoreUserId
             Users.GraduateUser = graduateUser
+            if (this is RegisterActivity) {
+                finishAffinity()
+            }
             // Go to graduate dashboard
             startActivity(Intent(this, GraduatesLandingActivity::class.java))
-        }
-        if (this is RegisterActivity) {
-            finishAffinity()
+        } else {
             val newIntent = Intent()
             newIntent.putExtra(Constants.INTENT_EXTRA_UID, firestoreUserId)
             newIntent.putExtra(Constants.INTENT_EXTRA_ROLE, collectionId)
