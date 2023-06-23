@@ -100,7 +100,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterB
             collectionId = collectionId,
             firestoreUserId = firestoreUserId,
             graduateUser = graduate,
-            shouldLoginAutomatically = false,
+            shouldLoginAutomatically = (getGraduateUser() == null && getAdminUser() == null),
         )
     }
 
