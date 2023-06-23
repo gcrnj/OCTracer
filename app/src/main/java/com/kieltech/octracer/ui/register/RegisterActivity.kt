@@ -44,6 +44,12 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterB
     }
 
     private fun setData() {
+        binding.registerButton.text =
+            getString(
+                if (getGraduateUser() == null && getAdminUser() == null) R.string.register
+                else R.string.edit
+            )
+
         if (graduateToEdit == null) {
             testCreds()
         } else {
@@ -135,7 +141,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterB
                         //Create graduate collection
                         val isEdit = graduateToEdit != null
                         val graduate = Graduate(
-                            id = if(isEdit) graduateToEdit?.id else null,
+                            id = if (isEdit) graduateToEdit?.id else null,
                             first_name = firstNameEditText.text.toString(),
                             middle_name = middleNameEditText.text.toString(),
                             last_name = lastNameEditText.text.toString(),
