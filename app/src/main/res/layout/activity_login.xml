@@ -22,7 +22,8 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:hint="@string/prompt_category"
             app:errorEnabled="false"
-            app:errorIconDrawable="@null">
+            app:errorIconDrawable="@null"
+            app:hintEnabled="false">
 
             <AutoCompleteTextView
                 android:id="@+id/categoryAutoComplete"
