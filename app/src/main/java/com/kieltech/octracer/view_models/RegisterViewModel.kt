@@ -1,20 +1,25 @@
 package com.kieltech.octracer.view_models
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.kieltech.octracer.R
 import com.kieltech.octracer.data.Graduate
 import com.kieltech.octracer.ui.register.RegisterListener
 import com.kieltech.octracer.ui.register.RegisterValidation
 import com.kieltech.octracer.utils.Constants
+import com.kieltech.octracer.utils.OCTracerFunctions.toHashMap
+import com.kieltech.octracer.utils.Utils
 
 class RegisterViewModel : ViewModel() {
 
-
+    private val TAG = "RegisterViewModel"
     private val _currentCollection = MutableLiveData<CollectionReference?>()
     val currentCollection: LiveData<CollectionReference?> = _currentCollection
 
@@ -33,7 +38,8 @@ class RegisterViewModel : ViewModel() {
         context: Context,
         graduate: Graduate,
         graduateValidation: RegisterValidation.Companion.GraduateValidation,
-        listener: RegisterListener
+        listener: RegisterListener,
+        isEdit: Boolean,
     ) {
 
         val errors = graduateValidation.findErrors(context)
@@ -53,11 +59,14 @@ class RegisterViewModel : ViewModel() {
         }
         collection.whereEqualTo(Constants.EMAIL_KEY, graduate.email)
             .get()
-            .addOnSuccessListener { snapshot->
-                if(snapshot.isEmpty){
+            .addOnSuccessListener { snapshot ->
+                if (snapshot.isEmpty) {
                     // no user with same email
                     // register
                     regiserGradute(context, graduate, listener)
+                } else if (snapshot.size() == 1 && graduate.collectionId == snapshot.first().id && isEdit) {
+                    // With user and is not new / edit only
+                    editGraduate(context, graduate, listener)
                 } else {
                     // email is taken
                     val newError = RegisterValidation.Companion.GraduateErrors(
@@ -100,5 +109,26 @@ class RegisterViewModel : ViewModel() {
                 listener.onRegisterProcessDone()
             }
 
+    }
+
+    private fun editGraduate(
+        context: Context,
+        graduate: Graduate,
+        listener: RegisterListener
+    ) {
+        val collection = Utils.graduatesCollection
+        val newRecordsHash = graduate.toHashMap()
+        newRecordsHash.remove(Constants.PASSWORD_KEY)
+        newRecordsHash.remove(Constants.COLLECTION_ID_KEY)
+        newRecordsHash.remove(Constants.TAG_KEY)
+        newRecordsHash.remove(Constants.CREATOR_KEY)
+        Log.d(TAG, "editGraduate: $newRecordsHash")
+        collection.document(graduate.collectionId!!).update(newRecordsHash)
+            .addOnSuccessListener {
+                listener.onRegisterSuccess(collection.id, graduate.collectionId!!, graduate)
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, it.message.toString(), Toast.LENGTH_SHORT).show()
+            }
     }
 }

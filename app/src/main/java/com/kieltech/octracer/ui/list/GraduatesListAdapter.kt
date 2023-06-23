@@ -4,9 +4,12 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.kieltech.octracer.data.Graduate
 import com.kieltech.octracer.databinding.LayoutGraduatesListItemBinding
 import com.kieltech.octracer.ui.landing.admins.AdminLandingActivity
+import com.kieltech.octracer.utils.Utils
 
 class GraduatesListAdapter(
     val adminLandingActivity: AdminLandingActivity,

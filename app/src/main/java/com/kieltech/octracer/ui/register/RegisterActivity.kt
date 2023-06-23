@@ -15,6 +15,7 @@ import com.kieltech.octracer.utils.OCTracerFunctions.enabled
 import com.kieltech.octracer.utils.OCTracerFunctions.gone
 import com.kieltech.octracer.utils.OCTracerFunctions.hideSoftKeyboard
 import com.kieltech.octracer.utils.OCTracerFunctions.milliseconds
+import com.kieltech.octracer.utils.OCTracerFunctions.parcelable
 import com.kieltech.octracer.utils.OCTracerFunctions.visible
 import com.kieltech.octracer.utils.Users
 import com.kieltech.octracer.utils.Utils
@@ -29,14 +30,42 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterB
     private val registerViewModel: RegisterViewModel by lazy {
         createViewModel()
     }
+    private val graduateToEdit: Graduate? by lazy {
+        intent.parcelable(Constants.GRADUATES_COLLECTION_PATH)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         registerViewModel.setCurrentCollectionTo(Utils.graduatesCollection)
-        testCreds()
+        setData()
         setOnClickListeners()
         defineViewModelObservers()
+    }
+
+    private fun setData() {
+        if (graduateToEdit == null) {
+            testCreds()
+        } else {
+            putEdit(graduateToEdit!!)
+        }
+    }
+
+    private fun putEdit(graduateToEdit: Graduate) {
+        binding.apply {
+            graduateToEdit.apply {
+                firstNameEditText.setText(first_name)
+                middleNameEditText.setText(middle_name)
+                lastNameEditText.setText(last_name)
+                yearGraduatedEditText.setText(year_graduated?.toString())
+                addressEditText.setText(address)
+                mobileNumberEditText.setText(mobile_number)
+                occupationEditText.setText(occupation)
+                emailEditText.setText(email)
+                passwordInputLayout.gone()
+                confirmPasswordInputLayout.gone()
+            }
+        }
     }
 
     private fun testCreds() {
@@ -71,7 +100,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterB
             collectionId = collectionId,
             firestoreUserId = firestoreUserId,
             graduateUser = graduate,
-            shouldLoginAutomatically = false
+            shouldLoginAutomatically = false,
         )
     }
 
@@ -104,7 +133,9 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterB
                     // Crate user credentials
                     if (registerViewModel.currentCollection.value == Utils.graduatesCollection) {
                         //Create graduate collection
+                        val isEdit = graduateToEdit != null
                         val graduate = Graduate(
+                            collectionId = if(isEdit) graduateToEdit?.collectionId else null,
                             first_name = firstNameEditText.text.toString(),
                             middle_name = middleNameEditText.text.toString(),
                             last_name = lastNameEditText.text.toString(),
@@ -115,19 +146,12 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterB
                             email = emailEditText.text.toString().lowercase(),
                             password = passwordEditText.text.toString(),
                         )
-                        Log.d(
-                            TAG,
-                            "defineViewModelObservers: ${
-                                graduate.toValidation(
-                                    confirmPasswordEditText.text.toString()
-                                )
-                            }"
-                        )
                         registerViewModel.initiateRegisterForGraduate(
                             this@RegisterActivity,
                             graduate,
-                            graduate.toValidation(confirmPasswordEditText.text.toString()),
-                            this@RegisterActivity
+                            graduate.toValidation(confirmPasswordEditText.text.toString(), !isEdit),
+                            this@RegisterActivity,
+                            isEdit
                         )
                     }
                 }

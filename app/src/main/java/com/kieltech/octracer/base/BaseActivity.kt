@@ -28,7 +28,7 @@ open class BaseActivity<VB : ViewBinding>(
         collectionId: String,
         firestoreUserId: String,
         graduateUser: Graduate,
-        shouldLoginAutomatically: Boolean
+        shouldLoginAutomatically: Boolean,
     ) {
         if (shouldLoginAutomatically) {
             // Registered by no user / graduate
@@ -46,6 +46,7 @@ open class BaseActivity<VB : ViewBinding>(
             val newIntent = Intent()
             newIntent.putExtra(Constants.INTENT_EXTRA_UID, firestoreUserId)
             newIntent.putExtra(Constants.INTENT_EXTRA_ROLE, collectionId)
+            newIntent.putExtra(Constants.GRADUATES_COLLECTION_PATH, graduateUser)
             setResult(RESULT_OK, newIntent)
         }
         finish()

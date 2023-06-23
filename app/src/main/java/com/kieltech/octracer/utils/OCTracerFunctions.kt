@@ -1,6 +1,10 @@
 package com.kieltech.octracer.utils
 
 import android.app.Activity
+import android.content.Intent
+import android.os.Build.VERSION.SDK_INT
+import android.os.Bundle
+import android.os.Parcelable
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
@@ -86,6 +90,11 @@ object OCTracerFunctions {
 
     inline fun <reified VM : ViewModel> AppCompatActivity.createViewModel(): VM {
         return ViewModelProvider(this)[VM::class.java]
+    }
+
+    inline fun <reified T : Parcelable> Intent.parcelable(key: String): T? = when {
+        SDK_INT >= 33 -> getParcelableExtra(key, T::class.java)
+        else -> @Suppress("DEPRECATION") getParcelableExtra(key) as? T
     }
 
     fun <T : Any> T.toHashMap(): HashMap<String, Any?> {

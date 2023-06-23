@@ -126,7 +126,7 @@ class AdminLandingActivity :
             newFragment?.let {
                 supportFragmentManager.beginTransaction().apply {
                     supportFragmentManager.fragments.forEach {
-                        hide(it)
+                        remove(it)
                     }
                     val foundFragment =
                         supportFragmentManager.findFragmentByTag(newFragment.title())

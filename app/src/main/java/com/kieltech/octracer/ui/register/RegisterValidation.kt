@@ -17,7 +17,8 @@ class RegisterValidation {
             val year_graduated: String? = null,
             val email: String? = null,
             val password: String? = null,
-            val confirmPassword : String? = null
+            val confirmPassword: String? = null,
+            val shouldValidatePassword: Boolean
         ) {
 
             fun findErrors(context: Context): GraduateErrors? {
@@ -84,12 +85,12 @@ class RegisterValidation {
                         emailError = loginEmailError
                         valid = false
                     }
-                    if (loginPasswordError != null) {
+                    if (loginPasswordError != null && shouldValidatePassword) {
                         passwordError = loginPasswordError
                         valid = false
                     }
                 }
-                if (password != confirmPassword){
+                if (password != confirmPassword && shouldValidatePassword) {
                     confirmPasswordError = context.getString(R.string.password_should_match)
                     valid = false
                 }

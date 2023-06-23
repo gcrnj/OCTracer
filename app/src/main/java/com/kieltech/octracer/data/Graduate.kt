@@ -2,7 +2,6 @@ package com.kieltech.octracer.data
 
 import android.os.Parcelable
 import android.util.Log
-import com.google.firebase.Timestamp
 import com.kieltech.octracer.ui.register.RegisterValidation
 import com.kieltech.octracer.utils.OCTracerFunctions.hashPassword
 import kotlinx.parcelize.IgnoredOnParcel
@@ -10,6 +9,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Graduate(
+    var collectionId: String? = "",
     val first_name: String? = "",
     val middle_name: String? = "",
     val last_name: String? = "",
@@ -38,7 +38,7 @@ data class Graduate(
         Log.d(TAG, "hashPassword: $password")
     }
 
-    fun toValidation(confirmPassword: String?): RegisterValidation.Companion.GraduateValidation =
+    fun toValidation(confirmPassword: String?, shouldValidatePassword: Boolean): RegisterValidation.Companion.GraduateValidation =
         RegisterValidation.Companion.GraduateValidation(
             first_name,
             middle_name,
@@ -49,7 +49,8 @@ data class Graduate(
             year_graduated.toString(),
             email,
             password,
-            confirmPassword
+            confirmPassword,
+            shouldValidatePassword
         )
 
 }
