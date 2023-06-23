@@ -3,11 +3,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/activities_background"
     tools:context=".ui.home.HomeFragment">
 
-    <TextView
-        android:id="@+id/graduatesCountTextView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:layout_width="match_parent"
+            app:roundPercent=".3"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/app_logo_marginHorizontal"
+            android:layout_marginTop="@dimen/app_logo_marginHorizontal"
+            android:adjustViewBounds="true"
+            android:src="@drawable/app" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textColor="@color/black"
+                android:textSize="@dimen/title_text_xxl_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/graduatesCountTextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/title_xl_text_size"
+                android:textStyle="bold"
+                tools:text="50" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/title_medium_text_size"
+                android:textStyle="bold"
+                tools:text="Registered users" />
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>
