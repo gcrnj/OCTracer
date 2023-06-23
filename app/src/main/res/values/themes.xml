@@ -5,6 +5,8 @@
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorSecondary">@color/white</item>
         <item name="materialButtonStyle">@style/OCTracer.Button</item>
+        <item name="colorPrimary">@color/maroon</item>
+        <item name="colorPrimaryDark">@color/maroon</item>
     </style>
 
     <style name="OCTracer.Button" parent="Widget.MaterialComponents.Button">

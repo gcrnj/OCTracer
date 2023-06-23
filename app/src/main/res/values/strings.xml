@@ -56,5 +56,6 @@
     <string name="update_error">Update error</string>
     <string name="verified_successfully">Verified successfully</string>
     <string name="user_declined">User declined</string>
+    <string name="registered_users">Registered users</string>
 
 </resources>
