@@ -49,5 +49,12 @@
     <string name="upload_edit_profile_picture">Upload / Update Profile Picure</string>
     <string name="name">Name</string>
     <string name="phone_no">Phone No.</string>
+    <string name="verification">Verification</string>
+    <string name="decline">Decline</string>
+    <string name="accept">Accept</string>
+    <string name="no_records_found">No Records Found</string>
+    <string name="update_error">Update error</string>
+    <string name="verified_successfully">Verified successfully</string>
+    <string name="user_declined">User declined</string>
 
 </resources>

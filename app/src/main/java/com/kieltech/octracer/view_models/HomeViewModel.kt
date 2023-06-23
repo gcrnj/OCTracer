@@ -3,6 +3,7 @@ package com.kieltech.octracer.view_models
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.firestore.QuerySnapshot
 import com.kieltech.octracer.data.Graduate
 import com.kieltech.octracer.ui.home.GetGraduateListener
 import com.kieltech.octracer.utils.Constants
@@ -17,6 +18,14 @@ class HomeViewModel : ViewModel() {
     private val _graduates = MutableLiveData<List<Graduate>?>()
     val graduates: LiveData<List<Graduate>?> = _graduates
 
+    private fun retrievedGraduates(snapshot: QuerySnapshot): List<Graduate> {
+        return snapshot.map { doc ->
+            val generatedGraduate = doc.generateGraduateUser()
+            generatedGraduate.id = doc.id
+            generatedGraduate
+        }
+    }
+
     fun retrieveNumberOfGraduates(from: Int, to: Int, listener: GetGraduateListener) {
         val graduatesCollection = Utils.graduatesCollection
 
@@ -25,9 +34,7 @@ class HomeViewModel : ViewModel() {
             .whereLessThanOrEqualTo(Constants.GRADUATED_YEAR_KEY, to)
             .get()
             .addOnSuccessListener { snapshot ->
-                val retrievedGraduates = snapshot.map { doc ->
-                    doc.generateGraduateUser()
-                }
+                val retrievedGraduates = retrievedGraduates(snapshot)
                 _graduates.value = retrievedGraduates
                 listener.onGetSuccess(retrievedGraduates)
             }
@@ -35,21 +42,35 @@ class HomeViewModel : ViewModel() {
             .addOnCompleteListener { }
     }
 
-    fun retrieveNumberOfGraduates(listener: GetGraduateListener){
+    fun retrieveNumberOfGraduates(listener: GetGraduateListener) {
         val graduatesCollection = Utils.graduatesCollection
         graduatesCollection
             .get()
             .addOnSuccessListener { snapshot ->
-                val retrievedGraduates = snapshot.map { doc ->
-                    val generatedGraduate = doc.generateGraduateUser()
-                    generatedGraduate.id = doc.id
-                    generatedGraduate
-                }
+                val retrievedGraduates = retrievedGraduates(snapshot)
                 _graduates.value = retrievedGraduates
                 listener.onGetSuccess(retrievedGraduates)
             }
             .addOnFailureListener { }
             .addOnCompleteListener { }
+    }
+
+    fun retrieveNumberOfVerifiedGraduates(listener: GetGraduateListener) {
+        val graduatesCollection = Utils.graduatesCollection
+
+        graduatesCollection
+            .whereEqualTo(Constants.IS_VERIFIED_KEY, false)
+            .get()
+            .addOnSuccessListener { snapshot ->
+                val retrievedGraduates = retrievedGraduates(snapshot)
+                _graduates.value = retrievedGraduates
+                listener.onGetSuccess(retrievedGraduates)
+            }
+            .addOnFailureListener {
+            }
+            .addOnCompleteListener {
+                listener.onGetProcessDone()
+            }
     }
 
     fun changeRange(newRange: IntRange) {

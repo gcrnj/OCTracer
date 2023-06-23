@@ -21,7 +21,7 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
     }
 
     override fun onGetSuccess(graduates: List<Graduate>) {
-        GraduatesListAdapter(requireActivity() as AdminLandingActivity, graduates, null).also {
+        GraduatesListAdapter(requireActivity() as AdminLandingActivity, graduates, null, false).also {
             binding.graduatesListRecyclerView.adapter = it
         }
     }

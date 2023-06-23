@@ -8,6 +8,11 @@
     </style>
 
     <style name="OCTracer.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/maroon</item>
+        <item name="backgroundTint">@color/white</item>
+    </style>
+
+    <style name="OCTracer.Button.Secondary" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@color/white</item>
         <item name="backgroundTint">@color/maroon</item>
     </style>

@@ -14,6 +14,7 @@ import com.kieltech.octracer.databinding.ActivityAdminLandingBinding
 import com.kieltech.octracer.ui.home.HomeFragment
 import com.kieltech.octracer.ui.list.ListFragment
 import com.kieltech.octracer.ui.profile.ProfileFragment
+import com.kieltech.octracer.ui.verification.VerificationFragment
 import com.kieltech.octracer.utils.Constants
 import com.kieltech.octracer.view_models.FragmentViewModel
 import com.kieltech.octracer.utils.OCTracerFunctions.createViewModel
@@ -100,17 +101,21 @@ class AdminLandingActivity :
                     }
 
                     R.id.registeredListDrawerMenu -> {
-                        // Handle navigation item 2 selection
                         setListFragment()
                         drawerLayout.closeDrawer(GravityCompat.START)
                         true
                     }
 
                     R.id.logoutDrawerMenu -> {
-                        // Handle navigation item 2 selection
                         logoutDialog.show()
                         drawerLayout.closeDrawer(GravityCompat.START)
                         false
+                    }
+
+                    R.id.registerVerificationDrawerMenu -> {
+                        setVerificationFragment()
+                        drawerLayout.closeDrawer(GravityCompat.START)
+                        true
                     }
 
                     else -> false
@@ -141,6 +146,13 @@ class AdminLandingActivity :
         profileFragment.arguments = bundle
         fragmentViewModel.changeFragment(
             newFragment = profileFragment,
+        )
+    }
+
+    fun setVerificationFragment() {
+        val verificationFragment = VerificationFragment()
+        fragmentViewModel.changeFragment(
+            newFragment = verificationFragment,
         )
     }
 

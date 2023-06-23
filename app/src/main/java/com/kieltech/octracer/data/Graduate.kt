@@ -19,7 +19,8 @@ data class Graduate(
     val year_graduated: Int? = 0,
     val email: String? = "",
     var password: String? = "",
-    val profilePic: String? = ""
+    val profilePic: String? = "",
+    val verified: Boolean? = false,
 ) : Parcelable {
 
     @IgnoredOnParcel
