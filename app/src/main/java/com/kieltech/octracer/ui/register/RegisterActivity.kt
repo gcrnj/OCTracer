@@ -140,6 +140,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterB
                     if (registerViewModel.currentCollection.value == Utils.graduatesCollection) {
                         //Create graduate collection
                         val isEdit = graduateToEdit != null
+                        val isVerified = if(isEdit) graduateToEdit?.verified else false
                         val graduate = Graduate(
                             id = if (isEdit) graduateToEdit?.id else null,
                             first_name = firstNameEditText.text.toString(),
@@ -151,6 +152,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterB
                             year_graduated = yearGraduatedEditText.text.toString().toIntOrNull(),
                             email = emailEditText.text.toString().lowercase(),
                             password = passwordEditText.text.toString(),
+                            verified = isVerified
                         )
                         registerViewModel.initiateRegisterForGraduate(
                             this@RegisterActivity,
