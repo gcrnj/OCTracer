@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModel
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
-import com.kieltech.octracer.data.SpannableGraduates
+import com.kieltech.octracer.data.SpannableGraduate
 import com.kieltech.octracer.ui.search.SearchListener
 import com.kieltech.octracer.utils.Constants
 import com.kieltech.octracer.utils.OCTracerFunctions.generateGraduateUser
@@ -22,8 +22,8 @@ import com.kieltech.octracer.utils.Utils
 class SearchViewModel : ViewModel() {
     private val TAG = "SearchViewModel"
 
-    private val _spannableGraduates = MutableLiveData<List<SpannableGraduates>?>()
-    val spannableGraduates: LiveData<List<SpannableGraduates>?> = _spannableGraduates
+    private val _spannableGraduate = MutableLiveData<List<SpannableGraduate>?>()
+    val spannableGraduate: LiveData<List<SpannableGraduate>?> = _spannableGraduate
 
     fun search(context: Context, search: String, searchListener: SearchListener) {
         val searchWordsList = search.split(" ")
@@ -54,13 +54,13 @@ class SearchViewModel : ViewModel() {
                     val spannableName = getSpannable(graduate.fullName(), searchWordsList)
                     val spannableOccupation =
                         getSpannable(graduate.occupation ?: "", searchWordsList)
-                    SpannableGraduates(
+                    SpannableGraduate(
                         graduate = graduate,
-                        spannableName = spannableName,
-                        spannableOccupancy = spannableOccupation
+                        nameSpannableString = spannableName,
+                        occupationSpannableString = spannableOccupation
                     )
                 }.distinctBy { it.graduate.id }.sortedBy { it.graduate.fullName() }
-                _spannableGraduates.value = newSpannableGraduates
+                _spannableGraduate.value = newSpannableGraduates
                 searchListener.onSearchSuccess(newSpannableGraduates)
             }
             .addOnFailureListener {

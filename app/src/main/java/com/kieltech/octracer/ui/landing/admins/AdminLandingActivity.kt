@@ -3,16 +3,21 @@ package com.kieltech.octracer.ui.landing.admins
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.lifecycleScope
 import com.kieltech.octracer.R
 import com.kieltech.octracer.base.BaseActivity
 import com.kieltech.octracer.base.BaseFragment
 import com.kieltech.octracer.data.Graduate
+import com.kieltech.octracer.data.SpannableGraduate
 import com.kieltech.octracer.databinding.ActivityAdminLandingBinding
 import com.kieltech.octracer.ui.home.HomeFragment
 import com.kieltech.octracer.ui.list.ListFragment
@@ -22,8 +27,11 @@ import com.kieltech.octracer.ui.verification.VerificationFragment
 import com.kieltech.octracer.utils.Constants
 import com.kieltech.octracer.view_models.FragmentViewModel
 import com.kieltech.octracer.utils.OCTracerFunctions.createViewModel
+import com.kieltech.octracer.utils.OCTracerFunctions.hideSoftKeyboard
 import com.kieltech.octracer.utils.OCTracerFunctions.parcelable
 import com.kieltech.octracer.view_models.AdminLandingViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class AdminLandingActivity :
     BaseActivity<ActivityAdminLandingBinding>(ActivityAdminLandingBinding::inflate) {
@@ -85,9 +93,11 @@ class AdminLandingActivity :
         binding.apply {
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
-                    val searchIntent = Intent(this@AdminLandingActivity, SearchActivity::class.java)
+                    val searchIntent =
+                        Intent(this@AdminLandingActivity, SearchActivity::class.java)
                     searchIntent.putExtra(Constants.INTENT_EXTRA_SEARCH, query)
-                    startActivity(searchIntent)
+                    searchLauncher.launch(searchIntent)
+                    searchView.onActionViewCollapsed()
                     return true
                 }
 
@@ -178,7 +188,8 @@ class AdminLandingActivity :
                         // If profile fragment
                         if (foundFragment is ProfileFragment) {
                             val passedArgs = newFragment.arguments
-                            val passedGraduate = passedArgs?.parcelable<Graduate>(Constants.GRADUATES_COLLECTION_PATH)
+                            val passedGraduate =
+                                passedArgs?.parcelable<Graduate>(Constants.GRADUATES_COLLECTION_PATH)
                             passedGraduate?.let {
                                 foundFragment.setGraduate(it)
                             }
@@ -226,6 +237,18 @@ class AdminLandingActivity :
             }
         }
     }
+
+    private var searchLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val spannableGraduate: SpannableGraduate? =
+                    result.data?.parcelable(Constants.INTENT_SPANNABLE_GRADUATE)
+                val graduate = spannableGraduate?.graduate
+                if (graduate != null) {
+                    setGraduateProfileFragment(graduate)
+                }
+            }
+        }
 
 
 }

@@ -1,14 +1,17 @@
 package com.kieltech.octracer.ui.search
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.kieltech.octracer.base.BaseActivity
-import com.kieltech.octracer.data.SpannableGraduates
+import com.kieltech.octracer.data.SpannableGraduate
 import com.kieltech.octracer.databinding.ActivitySearchBinding
 import com.kieltech.octracer.utils.Constants
 import com.kieltech.octracer.utils.OCTracerFunctions.createViewModel
 import com.kieltech.octracer.view_models.SearchViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class SearchActivity : BaseActivity<ActivitySearchBinding>(ActivitySearchBinding::inflate),
     SearchListener {
@@ -26,10 +29,12 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(ActivitySearchBinding
         Log.d(TAG, "onSearchStart: ")
     }
 
-    override fun onSearchSuccess(spannableGraduates: List<SpannableGraduates>) {
-        Log.d(TAG, "onSearchSuccess: ${spannableGraduates.map { it.graduate.id }}")
-        Log.d(TAG, "onSearchSuccess: ${spannableGraduates.map { it.spannableName.toString() + it.spannableOccupancy.toString() }}")
-        Toast.makeText(this@SearchActivity, "${spannableGraduates.size} records found", Toast.LENGTH_SHORT).show()
+    override fun onSearchSuccess(spannableGraduates: List<SpannableGraduate>) {
+        Log.d(TAG, "onSearchSuccess: ${spannableGraduates.size}")
+        val adapter = SearchesAdapter(this, spannableGraduates) { clickedGraduate ->
+            returnGraduate(clickedGraduate)
+        }
+        binding.searchedGraduatesRecyclerView.adapter = adapter
     }
 
     override fun onSearchDone() {
@@ -49,10 +54,21 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(ActivitySearchBinding
     }
 
     private fun defineObservers() {
-        searchViewModel.spannableGraduates.observe(this) { graduates ->
+        searchViewModel.spannableGraduate.observe(this) { graduates ->
             if (graduates == null && !toSearch.isNullOrBlank()) {
                 searchViewModel.search(this, toSearch!!, this)
             }
+        }
+    }
+
+    private fun returnGraduate(spannableGraduate: SpannableGraduate) {
+        lifecycleScope.launch {
+            val newIntent = Intent()
+            newIntent.putExtra(Constants.INTENT_SPANNABLE_GRADUATE, spannableGraduate)
+            newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            setResult(RESULT_OK, newIntent)
+            delay(500)
+            finish()
         }
     }
 }

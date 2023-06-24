@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="?attr/selectableItemBackground"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="true"
+    android:orientation="vertical"
+    app:contentPaddingBottom="@dimen/list_divider_small_size">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/activity_vertical_margin_half">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/profilePicCardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/black"
+            app:cardCornerRadius="@dimen/profile_pic_size"
+            app:contentPadding="@dimen/profile_card_padding">
+
+            <androidx.constraintlayout.utils.widget.ImageFilterView
+                android:id="@+id/profilePicImageView"
+                android:layout_width="@dimen/profile_pic_size_xs"
+                android:layout_height="@dimen/profile_pic_size_xs"
+                android:src="@color/white"
+                app:roundPercent="1"
+                tools:src="@tools:sample/avatars" />
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:layout_toEndOf="@id/profilePicCardView"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/fullNameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textColor="@color/name_text_color"
+                android:textSize="@dimen/title_text_size"
+                tools:text="@tools:sample/full_names" />
+
+            <TextView
+                android:id="@+id/occupationTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/list_divider_size"
+                android:gravity="start"
+                android:textColor="@color/name_text_color"
+                android:textSize="@dimen/title_medium_text_size"
+                tools:text="@tools:sample/full_names" />
+        </LinearLayout>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

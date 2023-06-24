@@ -32,8 +32,8 @@
 
                 <androidx.constraintlayout.utils.widget.ImageFilterView
                     android:id="@+id/profilePicImageView"
-                    android:layout_width="@dimen/profile_pic_size_small"
-                    android:layout_height="@dimen/profile_pic_size_small"
+                    android:layout_width="@dimen/profile_pic_size_xs"
+                    android:layout_height="@dimen/profile_pic_size_xs"
                     android:src="@color/white"
                     app:roundPercent="1"
                     tools:src="@tools:sample/avatars" />
