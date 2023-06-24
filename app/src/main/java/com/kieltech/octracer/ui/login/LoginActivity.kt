@@ -52,7 +52,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         //testCreds()
-        checkSavedUser()
         setClickListeners()
         defineRolesSelector()
         defineViewModelObservers()
@@ -67,6 +66,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
 
     override fun onLoginStart() {
         binding.loginButton.disabled()
+        binding.registerButton.disabled()
         binding.loading.visible()
         loginViewModel.clearErrors()
         hideSoftKeyboard()
@@ -98,6 +98,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
     override fun onLoginProcessDone() {
         binding.loading.gone()
         binding.loginButton.enabled()
+        binding.registerButton.enabled()
     }
 
     private fun defineViewModelObservers() {
@@ -178,35 +179,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
                         )
                     }
                 }
-            }
-        }
-    }
-
-    private fun checkSavedUser() {
-        userSharedPref.apply {
-            val uid = getString(Constants.SHARED_PREF_UID, null)
-            val role = getString(Constants.SHARED_PREF_ROLE, null)
-            Log.d(TAG, "checkSavedUser: $uid - $role")
-
-            if (uid != null && role != null) {
-                // there is a user
-                val collection = when (role) {
-                    Constants.ADMIN_COLLECTION_PATH -> {
-                        Utils.adminCollection
-                        // Go to admin dashboard
-                    }
-
-                    else -> {
-                        Utils.graduatesCollection
-                    }
-                }
-                loginViewModel.retrieveUserData(
-                    this@LoginActivity,
-                    collection,
-                    uid,
-                    this@LoginActivity
-                )
-
             }
         }
     }
