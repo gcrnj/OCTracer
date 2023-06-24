@@ -49,6 +49,17 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         binding.uploadProfileProgressIndicator.gone()
     }
 
+    override fun reloadData() {
+        super.reloadData()
+        if (baseActivity.getGraduateUser() != null) {
+            // Set UI for Graduates
+            setUIForGraduates()
+        } else {
+            // Set UI for Admin
+            setUIForAdmin()
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setFirstGraduate()
@@ -62,7 +73,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     }
 
     private fun defineViewModelObservers() {
-        profileViewModel.graduate.observe(viewLifecycleOwner) { graduate->
+        profileViewModel.graduate.observe(viewLifecycleOwner) { graduate ->
             if (graduate != null) {
                 setProfilePicture(graduate.id ?: "")
             }
@@ -78,7 +89,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         setGraduate(newGraduate)
     }
 
-    private fun setGraduate(newGraduate: Graduate?) {
+    fun setGraduate(newGraduate: Graduate?) {
+        binding.profilePicImageView.setImageURI(null)
         profileViewModel.resetGraduate(newGraduate)
     }
 
@@ -144,16 +156,5 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                 setGraduate(graduate)
             }
         }
-
-    override fun reloadData() {
-        super.reloadData()
-        if (baseActivity.getGraduateUser() != null) {
-            // Set UI for Graduates
-            setUIForGraduates()
-        } else {
-            // Set UI for Admin
-            setUIForAdmin()
-        }
-    }
 
 }

@@ -14,8 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.firestore.DocumentSnapshot
 import com.kieltech.octracer.data.Admin
 import com.kieltech.octracer.data.Graduate
-import com.kieltech.octracer.ui.register.RegisterValidation
-import com.kieltech.octracer.utils.OCTracerFunctions.hashPassword
 import org.mindrot.jbcrypt.BCrypt
 
 object OCTracerFunctions {
@@ -97,6 +95,11 @@ object OCTracerFunctions {
     inline fun <reified T : Parcelable> Intent.parcelable(key: String): T? = when {
         SDK_INT >= 33 -> getParcelableExtra(key, T::class.java)
         else -> @Suppress("DEPRECATION") getParcelableExtra(key) as? T
+    }
+
+    inline fun <reified T : Parcelable> Bundle.parcelable(key: String): T? = when {
+        SDK_INT >= 33 -> getParcelable(key, T::class.java)
+        else -> @Suppress("DEPRECATION") getParcelable(key) as? T
     }
 
     fun <T : Any> T.toHashMap(): HashMap<String, Any?> {

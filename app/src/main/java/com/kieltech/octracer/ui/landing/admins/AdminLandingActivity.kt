@@ -8,6 +8,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.FragmentTransaction
 import com.kieltech.octracer.R
 import com.kieltech.octracer.base.BaseActivity
 import com.kieltech.octracer.base.BaseFragment
@@ -21,6 +22,7 @@ import com.kieltech.octracer.ui.verification.VerificationFragment
 import com.kieltech.octracer.utils.Constants
 import com.kieltech.octracer.view_models.FragmentViewModel
 import com.kieltech.octracer.utils.OCTracerFunctions.createViewModel
+import com.kieltech.octracer.utils.OCTracerFunctions.parcelable
 import com.kieltech.octracer.view_models.AdminLandingViewModel
 
 class AdminLandingActivity :
@@ -166,15 +168,25 @@ class AdminLandingActivity :
         fragmentViewModel.selectedFragment.observe(this) { newFragment ->
             newFragment?.let {
                 supportFragmentManager.beginTransaction().apply {
+                    setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     supportFragmentManager.fragments.forEach {
                         hide(it)
                     }
                     val foundFragment =
                         supportFragmentManager.findFragmentByTag(newFragment.title()) as? BaseFragment<*>
                     if (foundFragment != null) {
+                        // If profile fragment
+                        if (foundFragment is ProfileFragment) {
+                            val passedArgs = newFragment.arguments
+                            val passedGraduate = passedArgs?.parcelable<Graduate>(Constants.GRADUATES_COLLECTION_PATH)
+                            passedGraduate?.let {
+                                foundFragment.setGraduate(it)
+                            }
+                        } else {
+                            foundFragment.reloadData()
+                        }
                         //show the selected.
                         show(foundFragment)
-                        foundFragment.reloadData()
                     } else {
                         //add the selected
                         add(
