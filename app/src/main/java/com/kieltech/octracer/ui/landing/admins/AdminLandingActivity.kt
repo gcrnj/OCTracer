@@ -95,7 +95,7 @@ class AdminLandingActivity :
                 override fun onQueryTextSubmit(query: String): Boolean {
                     val searchIntent =
                         Intent(this@AdminLandingActivity, SearchActivity::class.java)
-                    searchIntent.putExtra(Constants.INTENT_EXTRA_SEARCH, query)
+                    searchIntent.putExtra(Constants.INTENT_EXTRA_SEARCH, query.lowercase())
                     searchLauncher.launch(searchIntent)
                     searchView.onActionViewCollapsed()
                     return true
