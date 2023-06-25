@@ -9,5 +9,5 @@ import kotlinx.parcelize.RawValue
 data class SpannableGraduate(
     val graduate: Graduate,
     val nameSpannableString: @RawValue SpannableString,
-    val occupationSpannableString: @RawValue SpannableString
+    val moreInfoSpannableString: @RawValue SpannableString
 ) : Parcelable

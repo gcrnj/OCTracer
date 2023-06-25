@@ -36,7 +36,7 @@ class SearchesAdapter(
         fun bind(item: SpannableGraduate) {
             with(binding) {
                 fullNameTextView.text = item.nameSpannableString
-                occupationTextView.text = item.occupationSpannableString
+                occupationTextView.text = item.moreInfoSpannableString
                 root.setOnClickListener{
                     onCLickListener.invoke(item)
                 }

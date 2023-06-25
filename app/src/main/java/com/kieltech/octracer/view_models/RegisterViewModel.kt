@@ -58,6 +58,7 @@ class RegisterViewModel : ViewModel() {
         collection.whereEqualTo(Constants.EMAIL_KEY, graduate.email)
             .get()
             .addOnSuccessListener { snapshot ->
+                graduate.addSearchable()
                 if (snapshot.isEmpty) {
                     // no user with same email
                     // register

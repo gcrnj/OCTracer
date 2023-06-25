@@ -10,9 +10,6 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.android.gms.tasks.Tasks
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.QuerySnapshot
 import com.kieltech.octracer.data.SpannableGraduate
 import com.kieltech.octracer.ui.search.SearchListener
 import com.kieltech.octracer.utils.Constants
@@ -28,36 +25,28 @@ class SearchViewModel : ViewModel() {
     fun search(context: Context, search: String, searchListener: SearchListener) {
         val searchWordsList = search.split(" ")
         searchListener.onSearchStart()
-        val firstNameQuery = Utils.graduatesCollection
-            .whereIn(Constants.FIRST_NAME_KEY, searchWordsList)
+        Utils.graduatesCollection
+            .whereArrayContainsAny(Constants.SEARCHABLE_KEY, searchWordsList)
             .get()
-        val middleNameQuery = Utils.graduatesCollection
-            .whereIn(Constants.MIDDLE_NAME_KEY, searchWordsList)
-            .get()
-        val lastNameQuery = Utils.graduatesCollection
-            .whereIn(Constants.LAST_NAME_KEY, searchWordsList)
-            .get()
-        val occupationQuery = Utils.graduatesCollection
-            .whereIn(Constants.OCCUPATION_KEY, searchWordsList)
-            .get()
-        Tasks.whenAllComplete(firstNameQuery, middleNameQuery, lastNameQuery, occupationQuery)
-            .addOnSuccessListener { taskList ->
-                val snapshot = mutableListOf<DocumentSnapshot>()
-                for (task in taskList) {
-                    if (task.isSuccessful) {
-                        val querySnapshot = task.result as QuerySnapshot
-                        snapshot.addAll(querySnapshot.documents)
-                    }
-                }
+            .addOnSuccessListener { snapshot ->
                 val newSpannableGraduates = snapshot.map { doc ->
                     val graduate = doc.generateGraduateUser()
                     val spannableName = getSpannable(graduate.fullName(), searchWordsList)
-                    val spannableOccupation =
-                        getSpannable(graduate.occupation ?: "", searchWordsList)
+                    val moreInfoList = mutableListOf(
+                        graduate.address,
+                        graduate.mobile_number,
+                        graduate.occupation,
+                        graduate.year_graduated?.toString(),
+                        graduate.email,
+                        graduate.address,
+                    ).filter { !it.isNullOrEmpty() }
+                    Log.d(TAG, "search: $moreInfoList")
+                    val moreInfoSpannableString =
+                        getSpannable(moreInfoList.joinToString ( " / " ), searchWordsList)
                     SpannableGraduate(
                         graduate = graduate,
                         nameSpannableString = spannableName,
-                        occupationSpannableString = spannableOccupation
+                        moreInfoSpannableString = moreInfoSpannableString
                     )
                 }.distinctBy { it.graduate.id }.sortedBy { it.graduate.fullName() }
                 _spannableGraduate.value = newSpannableGraduates

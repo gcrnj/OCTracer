@@ -21,6 +21,7 @@ data class Graduate(
     var password: String? = "",
     val profilePic: String? = "",
     val verified: Boolean? = false,
+    var searchable: List<String>? = emptyList(),
 ) : Parcelable {
 
     @IgnoredOnParcel
@@ -60,5 +61,35 @@ data class Graduate(
             confirmPassword,
             shouldValidatePassword
         )
+
+    fun addSearchable() {
+        val firstNameList = splitLowercase(first_name)
+        val middleNameList = splitLowercase(middle_name)
+        val lastNameList = splitLowercase(last_name)
+        val addressList = splitLowercase(address)
+        val mobileNumberList = splitLowercase(mobile_number)
+        val occupationList = splitLowercase(occupation)
+        val yearGraduatedList = splitLowercase(year_graduated?.toString())
+        val emailList = splitLowercase(email)
+
+        searchable = combineLists(
+            firstNameList,
+            middleNameList,
+            lastNameList,
+            addressList,
+            mobileNumberList,
+            occupationList,
+            yearGraduatedList,
+            emailList
+        )
+    }
+
+    private fun splitLowercase(field: String?): List<String>? {
+        return field?.split(" ")?.map { it.lowercase().trim(',') }
+    }
+
+    private fun combineLists(vararg lists: List<String>?): List<String> {
+        return lists.flatMap { it ?: emptyList() }
+    }
 
 }
