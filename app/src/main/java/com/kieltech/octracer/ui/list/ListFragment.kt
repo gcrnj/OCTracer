@@ -8,6 +8,7 @@ import com.kieltech.octracer.databinding.FragmentListBinding
 import com.kieltech.octracer.ui.home.GetGraduateListener
 import com.kieltech.octracer.ui.landing.admins.AdminLandingActivity
 import com.kieltech.octracer.utils.OCTracerFunctions.createViewModel
+import com.kieltech.octracer.utils.OCTracerFunctions.visibleOrGone
 import com.kieltech.octracer.view_models.HomeViewModel
 
 class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::inflate),
@@ -21,6 +22,7 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
     }
 
     override fun onGetSuccess(graduates: List<Graduate>) {
+        binding.emptyListLayout.root.visibleOrGone(graduates.isEmpty())
         GraduatesListAdapter(requireActivity() as AdminLandingActivity, graduates, null, false).also {
             binding.graduatesListRecyclerView.adapter = it
         }
