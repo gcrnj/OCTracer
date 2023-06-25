@@ -61,17 +61,17 @@ class RegisterValidation {
                     addressError = context.getString(R.string.this_field_cannot_be_empty)
                     valid = false
                 }
-                if (mobile_number.isNullOrEmpty() || mobile_number.length != Constants.MOBILE_NUMBER_REQUIRED_LENGTH) {
-                    mobileNumberError = context.getString(
-                        R.string.this_field_requires_characters,
-                        Constants.MOBILE_NUMBER_REQUIRED_LENGTH
-                    )
-                    valid = false
-                }
-                if (occupation.isNullOrEmpty()) {
-                    occupationError = context.getString(R.string.this_field_is_required)
-                    valid = false
-                }
+//                if (mobile_number.isNullOrEmpty() || mobile_number.length != Constants.MOBILE_NUMBER_REQUIRED_LENGTH) {
+//                    mobileNumberError = context.getString(
+//                        R.string.this_field_requires_characters,
+//                        Constants.MOBILE_NUMBER_REQUIRED_LENGTH
+//                    )
+//                    valid = false
+//                }
+//                if (occupation.isNullOrEmpty()) {
+//                    occupationError = context.getString(R.string.this_field_is_required)
+//                    valid = false
+//                }
                 if (year_graduated.isNullOrEmpty() || year_graduated.length != Constants.YEAR_REQUIRED_LENGTH) {
                     occupationError = context.getString(R.string.this_field_is_required)
                     valid = false
