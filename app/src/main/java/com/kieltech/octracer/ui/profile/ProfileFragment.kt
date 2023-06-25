@@ -4,7 +4,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.kieltech.octracer.R
 import com.kieltech.octracer.base.BaseFragment
@@ -27,6 +29,47 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         baseActivity.createViewModel()
     }
 
+    private val onDeleteListener by lazy {
+        object : DeleteGraduateListener {
+            override fun onDeleteStart() {
+                binding.progress.visible()
+            }
+
+            override fun onDeleteSuccess() {
+                goToAdminFragment()
+            }
+
+            override fun onDeleteDone() {
+                binding.progress.gone()
+            }
+
+        }
+    }
+
+    private val deleteConfirmationDialog by lazy {
+        AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.delete_user))
+            .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
+                val graduate = profileViewModel.graduate.value
+                val id = graduate?.id
+                dialog.dismiss()// delete user
+                if (id != null) {
+                    profileViewModel.deleteGraduate(requireContext(), id, onDeleteListener)
+                }
+            }
+            .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+                dialog.dismiss()
+            }
+    }
+
+    private fun showDeleteConfirmation() {
+        val graduate = profileViewModel.graduate.value
+        val name = graduate?.first_name ?: ""
+        deleteConfirmationDialog
+            .setMessage(getString(R.string.delete_user_message, name))
+            .show()
+    }
+
     override fun onUploadStarted() {
         binding.uploadProfileProgressIndicator.visible()
     }
@@ -36,7 +79,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     }
 
     override fun onUploadFailure(message: String) {
-        // failed
     }
 
     override fun onUploadLoading(newProgress: Int) {
@@ -66,6 +108,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         setOnClickListeners()
         defineViewModelObservers()
         reloadData()
+        binding.progress.gone()
     }
 
     private fun setProfilePicture(collectionId: String) {
@@ -99,8 +142,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             baseActivity.logoutUser()
         }
         binding.backButton.setOnClickListener {
-            val adminLandingActivity = requireActivity() as AdminLandingActivity
-            adminLandingActivity.setListFragment()
+            goToAdminFragment()
         }
         binding.editButton.setOnClickListener {
             val graduate = profileViewModel.graduate.value
@@ -112,6 +154,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         }
         binding.uploadProfilePictureButton.setOnClickListener {
             baseActivity.openFileChooser(baseActivity.getGraduateUser()?.id!!, this)
+        }
+        binding.deleteButton.setOnClickListener {
+            showDeleteConfirmation()
         }
     }
 
@@ -156,5 +201,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                 setGraduate(graduate)
             }
         }
+
+    fun goToAdminFragment() {
+        val adminLandingActivity = requireActivity() as AdminLandingActivity
+        adminLandingActivity.setListFragment()
+    }
 
 }

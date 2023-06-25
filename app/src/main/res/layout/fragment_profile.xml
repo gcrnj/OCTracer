@@ -100,8 +100,8 @@
 
                 <TextView
                     android:id="@+id/addressTextView"
-                    android:layout_width="0dp"
                     style="@style/Theme.OCTracer.Graduate.Info.Value.Medium"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="5"
                     tools:text="@tools:sample/cities" />
@@ -148,8 +148,8 @@
 
                 <TextView
                     android:id="@+id/occupationTextView"
-                    android:layout_width="0dp"
                     style="@style/Theme.OCTracer.Graduate.Info.Value.Medium"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="5"
                     tools:text="@tools:sample/us_zipcodes" />
@@ -172,8 +172,8 @@
 
                 <TextView
                     android:id="@+id/yearGraduatedTextView"
-                    android:layout_width="0dp"
                     style="@style/Theme.OCTracer.Graduate.Info.Value.Medium"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="5"
                     tools:text="@tools:sample/us_zipcodes" />
@@ -191,29 +191,61 @@
                 android:id="@+id/adminActionButtonsLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/backButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/back" />
+
+                    <View
+                        android:layout_width="@dimen/list_divider_size"
+                        android:layout_height="0dp" />
+
+                    <Button
+                        android:id="@+id/editButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/edit" />
+                </LinearLayout>
 
                 <Button
-                    android:id="@+id/backButton"
-                    android:layout_width="0dp"
+                    android:id="@+id/deleteButton"
+                    style="@style/OCTracer.Button.Secondary"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/back" />
+                    android:text="@string/delete" />
 
-                <View
-                    android:layout_width="@dimen/list_divider_size"
-                    android:layout_height="0dp" />
-
-                <Button
-                    android:id="@+id/editButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/edit" />
             </LinearLayout>
 
         </LinearLayout>
 
     </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:elevation="1dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/maroon"
+            android:progressTint="@color/maroon" />
+
+    </FrameLayout>
 
 </RelativeLayout>

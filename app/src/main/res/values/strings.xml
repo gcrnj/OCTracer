@@ -37,11 +37,14 @@
     <string name="this_email_is_already_taken">This email is already taken</string>
     <string name="logout">Logout</string>
     <string name="logout_message">Are you sure that you want to logout?</string>
+    <string name="delete_user">Delete user</string>
+    <string name="delete_user_message">Are you sure that you want to delete <b>%1$s</b>\'s account??</string>
     <string name="back">Back</string>
     <string name="home">Home</string>
     <string name="registered_list">Registered List</string>
     <string name="search">Search</string>
     <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
     <string name="yes">Yes</string>
     <string name="cancel">Cancel</string>
 
