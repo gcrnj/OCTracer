@@ -12,6 +12,7 @@
     <string name="no_users_found">No users found</string>
     <string name="please_select_a_role">Please select a role</string>
     <string name="role_not_found">Role not found</string>
+    <string name="role">Role</string>
 
     <string name="admin">Admin</string>
     <string name="graduate">Graduate</string>
