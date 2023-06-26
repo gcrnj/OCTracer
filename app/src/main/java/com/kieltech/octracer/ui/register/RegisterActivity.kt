@@ -51,7 +51,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(ActivityRegisterB
             )
 
         if (graduateToEdit == null) {
-            testCreds()
+            //testCreds()
         } else {
             putEdit(graduateToEdit!!)
         }
