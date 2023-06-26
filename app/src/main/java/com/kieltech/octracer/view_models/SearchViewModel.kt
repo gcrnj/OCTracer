@@ -63,9 +63,8 @@ class SearchViewModel : ViewModel() {
 
     private fun getSpannable(sentence: String, wordsToBold: List<String>): SpannableString {
         val spannableString = SpannableString(sentence)
-
         for (word in wordsToBold) {
-            val startIndex = sentence.indexOf(word)
+            val startIndex = sentence.indexOf(word, ignoreCase = true)
             if (startIndex != -1) {
                 val endIndex = startIndex + word.length
 
